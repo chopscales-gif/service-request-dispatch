@@ -4,7 +4,9 @@ A service company's day on one board. Customer messages are read by AI into the 
 
 > **Demo project.** This is a demonstration build by ChopMedia, not client work. Tamarack Plumbing & Drain is a fictional company and Cinder Hollow is an invented town. Every customer, technician, address, phone number and message is made up. The AI readings were recorded ahead of time and are replayed; the demo does not call an AI model while you use it. No text message is ever sent, and no van is tracked.
 
-![The dispatcher's board at 10:30: a job has run long, two customers will be kept waiting, and a reshuffle is proposed](docs/board.png)
+| Booking as a customer | Following the visit | A technician's phone |
+| --- | --- | --- |
+| ![The customer request form on a phone](docs/customer.png) | ![A customer's page for following their visit](docs/track.png) | ![A technician's day on a phone](docs/tech.png) |
 
 **Live demo:** https://service-request-dispatch.vercel.app
 
@@ -33,11 +35,9 @@ Three things worth clicking first:
 
 **Reset demo** in the top bar puts the day back to 9:30 AM.
 
-![A waiting request: the customer's message with the quoted words marked, the recorded AI reading, and who the rules would send](docs/inbox.png)
+![The dispatcher's board at 10:30: a job has run long, two customers will be kept waiting, and a reshuffle is proposed](docs/board.png)
 
-| Booking as a customer | Following the visit | A technician's phone |
-| --- | --- | --- |
-| ![The customer request form on a phone](docs/customer.png) | ![A customer's page for following their visit](docs/track.png) | ![A technician's day on a phone](docs/tech.png) |
+![A waiting request: the customer's message with the quoted words marked, the recorded AI reading, and who the rules would send](docs/inbox.png)
 
 ![Texts to customers: an outbox of every text the day produced, none of them sent](docs/texts.png)
 
