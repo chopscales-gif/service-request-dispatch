@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getDb } from "@/db/client";
+import { getDb, type Db } from "@/db/client";
 import { resetSandbox } from "@/db/sandbox";
 import { JOB_TYPE_KEYS, TECH_IDS } from "@/lib/crew";
 import { AREA_KEYS } from "@/lib/town";
@@ -23,7 +23,9 @@ export type ActionResult = { ok: true; goto?: string } | { ok: false; error: str
 async function run(work: (ctx: Ctx) => Promise<string | void>): Promise<ActionResult> {
   let goto: string | void;
   try {
-    goto = await work(await getCtx());
+    // One transaction for each action, so a failure part of the way through leaves the day as it was.
+    const { db, sandboxId } = await getCtx();
+    goto = await db.transaction((tx) => work({ db: tx as unknown as Db, sandboxId }));
   } catch (error) {
     if (error instanceof WorkflowError) return { ok: false, error: error.message };
     console.error(error);

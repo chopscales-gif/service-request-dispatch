@@ -18,7 +18,8 @@ export const TEXTS = {
   late: (tech: string, arrive: number, start: number, end: number) =>
     `${US}: we are running behind and we are sorry. ${tech} now expects to arrive about ${fmtTime(arrive)}, later than the ${fmtWindow(start, end)} we gave you. Reply if that no longer works and we will rebook.`,
   lateEmergency: (tech: string, arrive: number) => `${US}: we are running behind and we are sorry. ${tech} now expects to reach you about ${fmtTime(arrive)}. Keep the main water valve off if you can.`,
-  tomorrow: () => `${US}: thank you for your message. We cannot fit this in today without keeping another customer waiting. We can come tomorrow morning between 8 and 10 AM. Reply to this text to book it.`,
+  /** `full` is when nobody could come today. Otherwise the dispatcher chose tomorrow, and the text does not pretend the day was full. */
+  tomorrow: (full: boolean) => `${US}: thank you for your message. ${full ? "We cannot fit this in today without keeping another customer waiting. " : ""}We can come tomorrow morning between 8 and 10 AM. Reply to this text to book it.`,
   cancelled: () => `${US}: your visit today has been cancelled. Reply to this text if that is a mistake.`,
   gas: () =>
     `${US}: if you smell gas or rotten eggs, leave the house now and take everyone with you. Do not use light switches, phones or anything with a flame indoors. From outside, call your gas company's emergency line or 911. We can come once they say it is safe.`,

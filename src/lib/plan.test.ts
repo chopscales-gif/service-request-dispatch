@@ -3,7 +3,7 @@ import { fmtDuration, fmtTime, fmtWindow } from "./clock";
 import { TECHS } from "./crew";
 import { carryOn, place, project, projectTech, type PlanJob } from "./plan";
 import { reshuffle, suggest } from "./suggest";
-import { SHOP, along, areaOf, drive } from "./town";
+import { AREAS, SHOP, along, areaOf, drive, labelAt } from "./town";
 import { windowsFor } from "./windows";
 
 const IDS = TECHS.map((tech) => tech.id);
@@ -36,6 +36,20 @@ describe("the town", () => {
 
   it("names the area a point is in", () => {
     expect(areaOf({ x: 17, y: 9 }).name).toBe("Lakeside");
+  });
+});
+
+describe("names on the drawing of the town", () => {
+  const northgate = AREAS.find((area) => area.key === "northgate")!;
+  it("sit above the middle of an area when nothing is there", () => {
+    expect(labelAt(northgate, [])).toEqual({ x: northgate.x, y: northgate.y - 1.2 });
+  });
+  it("move out of the way of a van, so a name is never drawn under one", () => {
+    const van = { x: northgate.x - 1, y: northgate.y - 1.4 };
+    const spot = labelAt(northgate, [van]);
+    expect(spot.y).toBeGreaterThan(northgate.y);
+    // And somewhere else again if that place is taken too.
+    expect(labelAt(northgate, [van, { x: northgate.x, y: spot.y }]).y).toBeLessThan(van.y);
   });
 });
 

@@ -9,14 +9,14 @@ import { AREAS, type AreaKey } from "@/lib/town";
 import { PROBLEMS, PROBLEM_KEYS, draftJob, windowsFor, type ProblemKey } from "@/lib/windows";
 import { requestServiceAction } from "@/server/actions";
 
-type Props = { plan: PlanJob[]; now: number; own: number };
+type Props = { plan: PlanJob[]; now: number; own: number; max: number };
 
 /**
  * The customer's request form. Every answer is a choice, so nothing a visitor
  * types is read by AI. The times offered are worked out here, from the same
  * rules the server checks them with, so a time is only shown if it can be kept.
  */
-export function RequestForm({ plan, now, own }: Props) {
+export function RequestForm({ plan, now, own, max }: Props) {
   const router = useRouter();
   const [problem, setProblem] = useState<ProblemKey | "gas" | null>(null);
   const [emergency, setEmergency] = useState<boolean | null>(null);
@@ -41,6 +41,18 @@ export function RequestForm({ plan, now, own }: Props) {
       else if (result.goto) router.push(result.goto);
     });
   }
+
+  // The demo stops taking bookings at its limit, and says so before anyone fills the form in.
+  if (own >= max)
+    return (
+      <div role="status" className="panel border-accent bg-accent-tint p-4 leading-snug">
+        <h2 className="text-xl font-bold">You have used all {max} bookings in this demo</h2>
+        <p className="mt-1.5">Each visitor can book {max} visits of their own, which keeps the sample day a sensible size. Your bookings are listed above and can still be followed.</p>
+        <p className="mt-1.5">
+          To book again, press <strong className="font-semibold">Reset demo</strong> in the bar at the top. That puts the day back to how it started.
+        </p>
+      </div>
+    );
 
   return (
     <form onSubmit={submit} className="space-y-6">

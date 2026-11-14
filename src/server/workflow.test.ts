@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createEmbeddedDb, type Db } from "@/db/client";
 import { ensureSandbox, resetSandbox } from "@/db/sandbox";
 import { LAST_NOW, START_NOW } from "@/lib/clock";
+import { TECHS, canDo } from "@/lib/crew";
 import { board, jobDetail, outbox } from "./queries";
 import { WorkflowError, acceptReshuffle, assign, cancel, offerTomorrow, referGas, requestService, setType, skipAhead, techArrive, techDepart, techDone, techNeedsMore, type Ctx } from "./workflow";
 
@@ -91,7 +92,10 @@ describe("booking from the inbox", () => {
     const spigot = await byKey(ctx, "spigot");
     await offerTomorrow(ctx, spigot.id);
     expect((await byKey(ctx, "spigot")).status).toBe("tomorrow");
-    expect((await textsTo(ctx, spigot.id))[0]).toContain("tomorrow morning");
+    const [text] = await textsTo(ctx, spigot.id);
+    expect(text).toContain("tomorrow morning");
+    // The dispatcher chose tomorrow with room left today, so the text must not claim the day is full.
+    expect(text).not.toContain("cannot fit");
   });
 
   it("cancels a booked job and frees the technician", async () => {
@@ -282,6 +286,61 @@ describe("a customer booking for themselves", () => {
     const ctx = await fresh();
     for (let i = 0; i < 6; i++) await requestService(ctx, { ...request, problem: "toilet", urgency: "emergency", windowStart: null });
     await expect(requestService(ctx, request)).rejects.toThrow("requests of your own");
+  });
+});
+
+describe("a whole day, played the way the README suggests", () => {
+  it("never has a technician in two places, sends nobody without the skill, and never texts a time already gone", async () => {
+    const ctx = await fresh();
+    for (;;) {
+      let view = await board(ctx);
+      if (view.proposal) await acceptReshuffle(ctx, view.proposal.signature);
+      for (const item of (await board(ctx)).inbox) {
+        if (item.job.status === "hold") await referGas(ctx, item.job.id);
+        else {
+          if (!item.job.type) await setType(ctx, item.job.id, "fixture");
+          const again = (await board(ctx)).inbox.find((other) => other.job.id === item.job.id)!;
+          await assign(ctx, item.job.id, again.options.find((option) => option.ok)!.techId);
+        }
+      }
+      view = await board(ctx);
+      for (const tech of TECHS) {
+        const day = view.jobs.filter((job) => job.techId === tech.id && view.projection.slots[job.id]).sort((a, b) => a.seq - b.seq);
+        let free = 0;
+        for (const job of day) {
+          const slot = view.projection.slots[job.id];
+          expect(slot.depart, `${tech.first} leaves for ${job.customer} before finishing the job before`).toBeGreaterThanOrEqual(free);
+          expect(canDo(tech, job.type!), `${tech.first} can do ${job.type}`).toBe(true);
+          if (job.status === "scheduled") expect(slot.arrive).toBeGreaterThanOrEqual(view.now);
+          free = slot.end;
+        }
+      }
+      if (view.now >= LAST_NOW) break;
+      await skipAhead(ctx);
+    }
+    const end = await board(ctx);
+    expect(end.inbox).toHaveLength(0);
+    expect(end.jobs.filter((job) => job.techId).every((job) => job.status === "done")).toBe(true);
+    for (const text of (await outbox(ctx)).texts) {
+      const quoted = [...text.body.matchAll(/about (\d+):(\d+) (AM|PM)/g)].map((match) => ((+match[1] % 12) + (match[3] === "PM" ? 12 : 0)) * 60 + +match[2]);
+      for (const time of quoted) expect(time, text.body).toBeGreaterThanOrEqual(text.at);
+    }
+  });
+});
+
+describe("an action that fails part of the way through", () => {
+  it("leaves the day as it was when it runs in a transaction, as every server action does", async () => {
+    const ctx = await fresh();
+    const sink = await byKey(ctx, "sink");
+    const before = (await outbox(ctx)).texts.length;
+    await expect(
+      db.transaction(async (tx) => {
+        await assign({ db: tx as unknown as Db, sandboxId: ctx.sandboxId }, sink.id, "priya");
+        throw new Error("lost connection");
+      }),
+    ).rejects.toThrow("lost connection");
+    expect((await byKey(ctx, "sink")).status).toBe("new");
+    expect((await outbox(ctx)).texts).toHaveLength(before);
   });
 });
 

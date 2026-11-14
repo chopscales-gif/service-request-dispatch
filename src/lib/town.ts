@@ -50,3 +50,16 @@ export function along(a: Point, b: Point, fraction: number): Point {
   if (gone <= dx) return { x: a.x + Math.sign(b.x - a.x) * gone, y: a.y };
   return { x: b.x, y: a.y + Math.sign(b.y - a.y) * (gone - dx) };
 }
+
+/**
+ * Where on the drawing an area's name goes. Above the middle of the area
+ * unless a van, a stop or a waiting request is drawn there, in which case the
+ * first clear place of: below, higher up, lower down. Returns the point the
+ * text is centred on, at its baseline.
+ */
+export function labelAt(area: Point & { name: string }, markers: Point[]): Point {
+  const half = area.name.length * 0.17 + 0.6;
+  const clear = (y: number) => markers.every((marker) => Math.abs(marker.x - area.x) >= half || marker.y < y - 1.05 || marker.y > y + 0.6);
+  const y = [area.y - 1.2, area.y + 1.6, area.y - 2, area.y + 2.4].find(clear) ?? area.y - 1.2;
+  return { x: area.x, y };
+}

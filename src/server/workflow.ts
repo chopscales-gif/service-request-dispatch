@@ -134,7 +134,7 @@ export async function offerTomorrow(ctx: Ctx, jobId: string): Promise<void> {
   if (job.status !== "new") throw new WorkflowError("Only a request still waiting in the inbox can be offered tomorrow.");
   if (job.urgency === "emergency") throw new WorkflowError("An emergency cannot wait until tomorrow.");
   await update(ctx, jobId, { status: "tomorrow" });
-  await send(ctx, jobId, now, TEXTS.tomorrow());
+  await send(ctx, jobId, now, TEXTS.tomorrow(false));
   await log(ctx, jobId, now, "Offered a visit tomorrow morning.");
 }
 
@@ -340,7 +340,7 @@ export async function requestService(ctx: Ctx, request: Request): Promise<string
   if (request.windowStart === null) {
     if (offered.length) throw new WorkflowError("Choose one of the times offered.");
     await ctx.db.insert(jobs).values({ ...draft, status: "tomorrow" });
-    await send(ctx, id, now, TEXTS.tomorrow());
+    await send(ctx, id, now, TEXTS.tomorrow(true));
     await log(ctx, id, now, "Requested online. Today is full, so tomorrow morning was offered.");
     return id;
   }

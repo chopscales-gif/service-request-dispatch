@@ -36,7 +36,7 @@ export default async function TrackPage({ params }: PageProps<"/track/[id]">) {
     detailLine = "Our dispatcher is looking at it now and will text you shortly.";
   } else if (job.status === "tomorrow") {
     headline = "We can come tomorrow morning";
-    detailLine = "Today is full. We have offered a visit tomorrow between 8 and 10 AM.";
+    detailLine = job.source === "web" ? "Today is full. We have offered a visit tomorrow between 8 and 10 AM." : "We have offered a visit tomorrow between 8 and 10 AM. Reply to our text to book it.";
   } else if (job.status === "cancelled") {
     headline = "This visit was cancelled";
     detailLine = `Call us on ${COMPANY.phone} if that is a mistake.`;
@@ -96,7 +96,7 @@ export default async function TrackPage({ params }: PageProps<"/track/[id]">) {
       <section className="mt-8">
         <h2 className="text-xl font-bold">Texts from us</h2>
         <p className="text-sm text-muted">In the demo these are shown here and never sent.</p>
-        {detail.texts.length === 0 && <p className="mt-2 text-muted">None yet.</p>}
+        {detail.texts.length === 0 && <p className="mt-2 text-muted">None yet today.</p>}
         <ul className="mt-3 space-y-2">
           {detail.texts.map((text) => (
             <li key={text.id} className="mr-8 rounded-xl rounded-bl-sm bg-idle px-3.5 py-2.5 leading-snug">

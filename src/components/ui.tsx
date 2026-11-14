@@ -14,7 +14,12 @@ export const STATUS_LABEL: Record<JobStatus, string> = {
   cancelled: "Cancelled",
 };
 
-export const surname = (name: string) => name.split(" ").at(-1)!;
+// The short name on the board. A visitor can type anything as a name, so fall
+// back to the whole of it when the last word is not a word ("Sam 2", an emoji).
+export const surname = (name: string) => {
+  const last = name.trim().split(/\s+/).at(-1) ?? name;
+  return /\p{L}{2,}/u.test(last) ? last : name.trim();
+};
 
 /** A technician's name with their colour beside it. */
 export function TechName({ id, full = false }: { id: string | null; full?: boolean }) {

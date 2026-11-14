@@ -196,6 +196,7 @@ h3 {
     line-height: 1.1;
     white-space: nowrap;
     box-shadow: 0 1px 0 rgb(20 35 29 / 0.25);
+    z-index: 1;
   }
   .magnet:hover {
     z-index: 3;
@@ -231,7 +232,8 @@ h3 {
     margin-left: -1px;
     background: var(--color-hivis);
     box-shadow: 0 0 0 1px rgb(20 35 29 / 0.35);
-    z-index: 2;
+    /* Behind the magnets, so the line never cuts through a customer's name. */
+    z-index: 0;
   }
 }
 

@@ -1,7 +1,7 @@
 import type { Job } from "@/db/schema";
 import { TECHS } from "@/lib/crew";
 import { vanAt, type PlanJob, type Projection } from "@/lib/plan";
-import { AREAS, GRID, SHOP, TOWN } from "@/lib/town";
+import { AREAS, GRID, SHOP, TOWN, labelAt } from "@/lib/town";
 
 type Props = { jobs: Job[]; plan: PlanJob[]; projection: Projection; now: number };
 
@@ -13,6 +13,18 @@ type Props = { jobs: Job[]; plan: PlanJob[]; projection: Projection; now: number
 export function TownMap({ jobs, plan, projection, now }: Props) {
   const waiting = jobs.filter((job) => job.status === "new" || job.status === "hold");
   const stops = jobs.filter((job) => job.techId && ["scheduled", "en_route", "on_site"].includes(job.status));
+  // Vans at the same place are nudged apart so each can be seen.
+  const vans = TECHS.map((tech, index) => {
+    const at = vanAt(
+      plan.filter((job) => job.techId === tech.id && projection.slots[job.id]).sort((a, b) => a.seq - b.seq),
+      projection.slots,
+      now,
+    );
+    const nudge = (index - 2) * 0.12;
+    return { tech, x: at.x + nudge, y: at.y - 0.55 + nudge };
+  });
+  // Everything a name must not be drawn across.
+  const markers = [...vans, ...stops, ...waiting, SHOP];
   return (
     <figure className="panel overflow-hidden">
       <svg viewBox={`-0.8 -0.8 ${GRID.width + 1.6} ${GRID.height + 1.6}`} role="img" aria-label={`Drawing of ${TOWN} with each van and today's remaining stops`} className="block w-full bg-[#eef3f0]">
@@ -43,27 +55,18 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
           </g>
         ))}
         {AREAS.map((area) => (
-          <text key={area.key} x={area.x} y={area.y - 1.2} textAnchor="middle" fontSize="0.62" fontWeight="600" fill="#4f6058" stroke="#eef3f0" strokeWidth="0.22" paintOrder="stroke" style={{ fontFamily: "var(--font-display)" }}>
+          <text key={area.key} {...labelAt(area, markers)} textAnchor="middle" fontSize="0.62" fontWeight="600" fill="#4f6058" stroke="#eef3f0" strokeWidth="0.22" paintOrder="stroke" style={{ fontFamily: "var(--font-display)" }}>
             {area.name}
           </text>
         ))}
-        {TECHS.map((tech, index) => {
-          const at = vanAt(
-            plan.filter((job) => job.techId === tech.id && projection.slots[job.id]).sort((a, b) => a.seq - b.seq),
-            projection.slots,
-            now,
-          );
-          // Vans at the same place are nudged apart so each can be seen.
-          const nudge = (index - 2) * 0.12;
-          return (
-            <g key={tech.id} data-tone={tech.tone} transform={`translate(${at.x + nudge} ${at.y - 0.55 + nudge})`}>
-              <rect x="-0.42" y="-0.42" width="0.84" height="0.84" rx="0.12" fill="var(--tone)" stroke="#ffffff" strokeWidth="0.08" />
-              <text y="0.2" textAnchor="middle" fontSize="0.58" fontWeight="700" fill="#ffffff">
-                {tech.first[0]}
-              </text>
-            </g>
-          );
-        })}
+        {vans.map(({ tech, x, y }) => (
+          <g key={tech.id} data-tone={tech.tone} transform={`translate(${x} ${y})`}>
+            <rect x="-0.42" y="-0.42" width="0.84" height="0.84" rx="0.12" fill="var(--tone)" stroke="#ffffff" strokeWidth="0.08" />
+            <text y="0.2" textAnchor="middle" fontSize="0.58" fontWeight="700" fill="#ffffff">
+              {tech.first[0]}
+            </text>
+          </g>
+        ))}
       </svg>
       <figcaption className="space-y-1.5 border-t border-line px-3 py-2 text-sm text-muted">
         <p className="flex flex-wrap gap-x-3 gap-y-1">

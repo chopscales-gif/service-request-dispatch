@@ -5,6 +5,7 @@ import { COMPANY } from "@/lib/crew";
 import type { PlanJob } from "@/lib/plan";
 import { board } from "@/server/queries";
 import { getCtx } from "@/server/session";
+import { MAX_OWN_REQUESTS } from "@/server/workflow";
 
 export const metadata: Metadata = { title: "Request service" };
 
@@ -35,7 +36,7 @@ export default async function CustomerPage() {
         </p>
       )}
       <div className="mt-6">
-        <RequestForm plan={view.plan.map(slim)} now={view.now} own={mine.length} />
+        <RequestForm plan={view.plan.map(slim)} now={view.now} own={mine.length} max={MAX_OWN_REQUESTS} />
       </div>
       {sample && (
         <p className="mt-10 border-t border-line pt-4 leading-relaxed text-muted">
@@ -43,7 +44,7 @@ export default async function CustomerPage() {
           <Link href={`/track/${sample.id}`} className="font-semibold text-ink underline underline-offset-4">
             {sample.customer}&apos;s visit
           </Link>
-          . Keep the page open in mind when you skip ahead as the dispatcher.
+          . The page changes as the day moves on, so look again after you skip ahead.
         </p>
       )}
     </main>
