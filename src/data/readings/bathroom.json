@@ -1,0 +1,25 @@
+{
+  "summary": "The customer sometimes finds water on the bathroom floor by the toilet in the mornings, does not know where it comes from, and wants someone to look.",
+  "job_type": {
+    "value": "unclear",
+    "quote": "there is sometimes water on the floor by the toilet in the mornings"
+  },
+  "urgency": {
+    "value": "unstated",
+    "quote": null,
+    "why": "The customer gives no timing, and occasional water on the floor does not make it plain how soon someone is needed."
+  },
+  "safety": null,
+  "access": [],
+  "ask_first": [
+    "Where exactly is the water: around the base of the toilet, under the tank, or under the pipe and valve on the wall?",
+    "Is the water clean, or is it discoloured or smelly?",
+    "How much water is there, and how often does it happen?",
+    "How soon do you need someone, and when is someone home?"
+  ],
+  "notes": [
+    "The water only appears sometimes and in the mornings, so there may be nothing to see when the technician arrives.",
+    "The customer does not say the water comes from the toilet, only that it is beside it. It could be the toilet, a pipe or something else in the room.",
+    "The message is signed Mrs. Adeyemi."
+  ]
+}

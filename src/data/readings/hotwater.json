@@ -1,0 +1,29 @@
+{
+  "summary": "The customer has had no hot water at all since this morning from a gas water heater about twelve years old, and wants it looked at today.",
+  "job_type": {
+    "value": "water_heater",
+    "quote": "we got no hot water this morning, none at all"
+  },
+  "urgency": {
+    "value": "today",
+    "quote": "we'd really like it looked at today if you can",
+    "why": "The customer asks for today and has no hot water."
+  },
+  "safety": null,
+  "access": [
+    {
+      "text": "Someone is home all day.",
+      "quote": "I'm home all day"
+    }
+  ],
+  "ask_first": [
+    "How many times does the light at the bottom blink before it pauses?",
+    "What make and model is the heater, and what size is the tank? It should be on the label on the side.",
+    "What is the house number on Pippin Court?"
+  ],
+  "notes": [
+    "The customer says he sees no leaks and smells nothing.",
+    "The heater is a gas one and about twelve years old by his estimate, so replacement may come up as well as repair.",
+    "He gives his name as Walt Brennan and says a guest is arriving tonight. This is a transcribed voicemail, so names may be misspelled."
+  ]
+}

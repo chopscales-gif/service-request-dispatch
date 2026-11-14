@@ -1,0 +1,34 @@
+{
+  "summary": "The customer's kitchen sink is blocked with standing water, the dishwasher pushes more water up into it, and she wants someone today.",
+  "job_type": {
+    "value": "drain",
+    "quote": "kitchen sink is backing up again, water just sits there"
+  },
+  "urgency": {
+    "value": "today",
+    "quote": "Can someone come today?",
+    "why": "The customer asks for today and has no usable kitchen sink."
+  },
+  "safety": null,
+  "access": [
+    {
+      "text": "Use the side door. The front bell does not work.",
+      "quote": "Side door, the front bell is broken"
+    },
+    {
+      "text": "Someone is home all day, any time is fine.",
+      "quote": "I work from home so anytime is ok"
+    }
+  ],
+  "ask_first": [
+    "What was the liquid product you poured in, how much, and is it still sitting in the water in the sink?",
+    "Are any other drains in the house slow or backing up, or is it only the kitchen sink?",
+    "You said it is backing up again. When did it last block, and how was it cleared then?",
+    "Is there a garbage disposal on that sink?"
+  ],
+  "notes": [
+    "The customer poured in \"that liquid stuff\" last night and does not say what it was. If it was a chemical drain opener it may still be in the standing water, so the technician should know before working on it.",
+    "She says \"again\", so this is a repeat blockage, not a first one.",
+    "The message is signed Renee."
+  ]
+}

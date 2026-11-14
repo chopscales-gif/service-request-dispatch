@@ -1,0 +1,30 @@
+{
+  "summary": "The customer wants an outside tap at the back of the house repaired because it drips all the time, even when fully shut.",
+  "job_type": {
+    "value": "fixture",
+    "quote": "Outside tap on the back of the house drips constantly even when shut all the way"
+  },
+  "urgency": {
+    "value": "flexible",
+    "quote": "Not urgent, any day this week or next is fine",
+    "why": "The customer says it is not urgent and offers a two week window."
+  },
+  "safety": null,
+  "access": [
+    {
+      "text": "Call before coming.",
+      "quote": "Please call before coming"
+    },
+    {
+      "text": "There is a dog in the yard, and the tap is at the back of the house.",
+      "quote": "we have a dog in the yard"
+    }
+  ],
+  "ask_first": [
+    "Is the water dripping from the spout, or from around the handle?",
+    "Do you know if there is a shutoff for that tap inside the house, and does it work?"
+  ],
+  "notes": [
+    "The message does not say what number to call before coming, so check the contact details on the form."
+  ]
+}

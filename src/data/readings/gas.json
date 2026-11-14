@@ -1,0 +1,29 @@
+{
+  "summary": "The customer's basement water heater will not stay lit and there has been a rotten egg smell near it since this morning.",
+  "job_type": {
+    "value": "water_heater",
+    "quote": "our water heater in the basement isnt staying lit"
+  },
+  "urgency": {
+    "value": "emergency",
+    "quote": "theres a smell like rotten eggs down there since this morning",
+    "why": "A rotten egg smell next to a heater that will not stay lit is a possible risk to people and the building, although the customer only asks for today."
+  },
+  "safety": {
+    "hazard": "gas_smell",
+    "what": "Rotten egg smell in the basement, strongest by the water heater, present since the morning.",
+    "quote": "theres a smell like rotten eggs down there since this morning. kind of strong by the heater"
+  },
+  "access": [],
+  "ask_first": [
+    "Is anyone in the house right now?",
+    "Can you smell it anywhere else in the house, or only in the basement?",
+    "Is the smell getting stronger, staying the same, or fading?",
+    "Has anyone been trying to relight the heater?"
+  ],
+  "notes": [
+    "The customer describes this as a water heater repair and asks for someone today. They do not mention gas or treat the smell as urgent.",
+    "The smell has been there since the morning, so it has had hours to build up.",
+    "The message does not say outright that the heater is gas. That it \"isnt staying lit\" suggests it is."
+  ]
+}

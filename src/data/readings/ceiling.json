@@ -1,0 +1,33 @@
+{
+  "summary": "Water is coming through the customer's kitchen ceiling from under the upstairs bathroom, it is getting worse, and they cannot find the shutoff.",
+  "job_type": {
+    "value": "leak",
+    "quote": "water is coming through my kitchen ceiling right now"
+  },
+  "urgency": {
+    "value": "emergency",
+    "quote": "I dont know where the shutoff is",
+    "why": "Water is escaping now, it is getting worse, the customer cannot stop it, and the ceiling is sagging."
+  },
+  "safety": {
+    "hazard": "other",
+    "what": "Kitchen ceiling is sagging under the water and could come down.",
+    "quote": "its getting worse and the ceiling is sagging"
+  },
+  "access": [
+    {
+      "text": "The address is 212 Grandstand Rd.",
+      "quote": "212 Grandstand Rd"
+    }
+  ],
+  "ask_first": [
+    "Is anything running upstairs right now, such as a tap, the shower, the toilet filling or a washing machine?",
+    "Is the water coming through near a ceiling light or anything electrical?",
+    "Is the water clean, or is it dirty or smelly?",
+    "Will you be at the house to let the technician in?"
+  ],
+  "notes": [
+    "The water has not been shut off. The customer does not know where the shutoff is.",
+    "The leak is below the upstairs bathroom. The message does not say whether it comes from a supply pipe, a drain or a fixture."
+  ]
+}

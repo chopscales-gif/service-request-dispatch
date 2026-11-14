@@ -1,0 +1,32 @@
+[
+  {
+    "key": "spigot",
+    "channel": "Website form",
+    "text": "Outside tap on the back of the house drips constantly even when shut all the way. Not urgent, any day this week or next is fine. Please call before coming, we have a dog in the yard."
+  },
+  {
+    "key": "sink",
+    "channel": "Text message",
+    "text": "Hi, kitchen sink is backing up again, water just sits there and the dishwasher pushes more up into it. Tried the plunger and that liquid stuff last night, nothing. Can someone come today? I work from home so anytime is ok. Side door, the front bell is broken. - Renee"
+  },
+  {
+    "key": "gas",
+    "channel": "Text message",
+    "text": "hey our water heater in the basement isnt staying lit and theres a smell like rotten eggs down there since this morning. kind of strong by the heater. can you send somebody to look at it today?"
+  },
+  {
+    "key": "hotwater",
+    "channel": "Voicemail, transcribed",
+    "text": "Hi, this is Walt Brennan on Pippin Court. Uh, we got no hot water this morning, none at all. The heater's a gas one, maybe twelve years old, and I went down and the little light at the bottom is blinking, I don't know what that means. No leaks that I can see, no smell or anything. My wife's got her mother coming tonight so we'd really like it looked at today if you can. I'm home all day. Thanks."
+  },
+  {
+    "key": "ceiling",
+    "channel": "Text message",
+    "text": "EMERGENCY water is coming through my kitchen ceiling right now!! its under the upstairs bathroom. I put buckets down but its getting worse and the ceiling is sagging. I dont know where the shutoff is. please send someone NOW. 212 Grandstand Rd"
+  },
+  {
+    "key": "bathroom",
+    "channel": "Text message",
+    "text": "Hello, I have a problem in my bathroom, there is sometimes water on the floor by the toilet in the mornings. I am not sure where it comes from. Could someone look? Thank you, Mrs. Adeyemi"
+  }
+]
