@@ -246,8 +246,16 @@ h1 {
     box-shadow: 0 2px 0 rgb(20 20 20 / 0.22);
     z-index: 1;
   }
+  /* A long name on a short job is set a little smaller, down to 12px, before it is ever cut off. */
+  .magnet {
+    container-type: inline-size;
+  }
+  .magnet-name {
+    font-size: clamp(0.75rem, calc(100cqw / (var(--n) * 0.5)), 0.9375rem);
+  }
   .magnet:hover,
   .magnet:focus-visible {
+    container-type: normal;
     z-index: 3;
     overflow: visible;
     min-width: max-content;

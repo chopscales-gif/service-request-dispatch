@@ -9,7 +9,7 @@ import { COMPANY } from "./crew";
 const US = COMPANY.name;
 
 export const TEXTS = {
-  booked: (tech: string, start: number, end: number) => `${US}: you are booked for today. ${tech} will arrive ${fmtBetween(start, end)}. We will text when they are on the way.`,
+  booked: (tech: string, start: number, end: number) => `${US}: you are booked for today. ${tech} will arrive ${fmtBetween(start, end)}. We will text you when ${tech} is on the way.`,
   emergency: (tech: string, arrive: number, next: boolean) => `${US}: ${tech} is coming to you ${next ? "next" : "as soon as possible"} and should arrive about ${fmtTime(arrive)}. If you can reach the main water valve, turn it off now.`,
   onTheWay: (tech: string, arrive: number) => `${US}: ${tech} is on the way and should arrive about ${fmtTime(arrive)}.`,
   done: (tech: string) => `${US}: ${tech} has finished. Thank you for calling us. Reply to this text if anything is not right.`,

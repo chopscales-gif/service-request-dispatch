@@ -75,9 +75,9 @@ export function Board({ jobs, projection, now }: Props) {
                           data-late={late}
                           title={title(job, slot)}
                           aria-label={title(job, slot)}
-                          style={{ left: pct(from), width: `calc(${pct(until)} - ${pct(from)})` }}
+                          style={{ left: pct(from), width: `calc(${pct(until)} - ${pct(from)})`, "--n": surname(job.customer).length } as React.CSSProperties}
                         >
-                          {surname(job.customer)}
+                          <span className="magnet-name">{surname(job.customer)}</span>
                           {late && <span className="text-xs font-bold">{slot.late} min late</span>}
                         </Link>
                       </span>

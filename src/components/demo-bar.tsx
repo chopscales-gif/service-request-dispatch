@@ -29,40 +29,47 @@ export function DemoBar({ now }: { now: number | null }) {
   const view = viewOf(usePathname());
   return (
     <div className="demo-chrome bg-steel text-sm text-white">
-      <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-5 gap-y-2 px-4 py-2 sm:px-6">
-        <p className="min-w-0 flex-1 basis-72 leading-snug">
+      {/* On a phone the bar is three short rows, so the company's own screen starts as high as it can. */}
+      <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-3 px-4 py-1 sm:gap-x-5 sm:gap-y-2 sm:px-6 sm:py-2">
+        <p className="min-w-0 flex-1 leading-snug sm:basis-72">
           <strong className="font-bold">Demonstration build.</strong>{" "}
-          <span className="text-white/75">A fictional plumbing company in an invented town. The AI readings were recorded ahead of time, and no text is ever sent.</span>
+          <span className="hidden text-white/75 sm:inline">A fictional plumbing company in an invented town. The AI readings were recorded ahead of time, and no text is ever sent.</span>
         </p>
         <Link href="/about" className="inline-flex min-h-11 items-center font-semibold underline decoration-white/40 underline-offset-4 hover:decoration-white sm:min-h-0">
-          How this demo works
+          How <span className="hidden sm:inline">&nbsp;this demo&nbsp;</span>
+          <span className="sm:hidden">&nbsp;it&nbsp;</span> works
         </Link>
         {now !== null && (
           <form action={resetDemoAction}>
             <ResetButton />
           </form>
         )}
+        <p className="-mt-0.5 basis-full pb-1.5 text-[0.8125rem] leading-snug text-white/75 sm:hidden">Fictional company, recorded AI, no texts sent.</p>
       </div>
       {now !== null && (
         <div className="border-t border-white/15 bg-white/5">
-          <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-5 gap-y-2 px-4 py-2 sm:px-6">
-            <nav aria-label="Whose screen" className="flex items-center gap-2">
+          <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-2 sm:gap-x-5 sm:gap-y-2 sm:px-6">
+            <nav aria-label="Whose screen" className="flex basis-full items-center gap-2 sm:basis-auto">
               <span className="text-white/75">See it as</span>
-              <span className="flex overflow-hidden rounded-[3px] border border-white/40">
+              <span className="flex flex-1 overflow-hidden rounded-[3px] border border-white/40 sm:flex-none">
                 {VIEWS.map((item) => (
                   <Link
                     key={item.key}
                     href={item.href}
                     aria-current={view === item.key ? "page" : undefined}
-                    className={`inline-flex min-h-11 items-center px-3 py-1.5 font-semibold sm:min-h-0 ${view === item.key ? "bg-white text-ink" : "hover:bg-white/15"}`}
+                    className={`inline-flex min-h-11 flex-1 items-center justify-center px-2 py-1.5 font-semibold sm:min-h-0 sm:flex-none sm:px-3 ${view === item.key ? "bg-white text-ink" : "hover:bg-white/15"}`}
                   >
                     {item.label}
                   </Link>
                 ))}
               </span>
             </nav>
-            <p className="min-w-0 flex-1 basis-56 sm:text-right">
-              <span className="text-white/75">In the demo it is</span> <strong className="font-bold">{fmtTime(now)}</strong> <span className="text-white/75">on {DAY_NAME}</span>
+            <p className="min-w-0 flex-1 sm:basis-56 sm:text-right">
+              <span className="text-white/75">
+                <span className="hidden sm:inline">In the demo it is</span>
+                <span className="sm:hidden">Demo time</span>
+              </span>{" "}
+              <strong className="font-bold">{fmtTime(now)}</strong> <span className="hidden text-white/75 sm:inline">on {DAY_NAME}</span>
             </p>
             {now < LAST_NOW ? <SkipAhead /> : <p className="text-white/75">The demo day ends here. Reset to start again.</p>}
           </div>

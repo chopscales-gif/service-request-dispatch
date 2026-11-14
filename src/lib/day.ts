@@ -30,7 +30,7 @@ export type Booked = {
 
 export const BOOKED: Booked[] = [
   // Dana Whitlock
-  { key: "d1", customer: "Harlan Voss", phone: "(555) 010-0111", street: "18 Shale Road", x: 4, y: 11, type: "sewer", problem: "Slow drains through the whole house. Camera the main line.", window: 8, tech: "dana", status: "on_site", departAt: at(8), arriveAt: at(8, 14) },
+  { key: "d1", customer: "Harlan Voss", phone: "(555) 010-0111", street: "18 Shale Road", x: 4, y: 11, type: "sewer", problem: "Slow drains through the whole house. Camera the main line.", window: 8, tech: "dana", status: "on_site", departAt: at(8), arriveAt: at(8, 15) },
   { key: "d2", customer: "Imogen Castellanos", phone: "(555) 010-0112", street: "7 Sluice Lane", x: 3, y: 5, type: "drain", problem: "Basement floor drain backs up when the washer empties.", window: 10, tech: "dana", status: "scheduled" },
   { key: "d3", customer: "Bao Nguyen", phone: "(555) 010-0113", street: "31 Assay Street", x: 10, y: 6, type: "drain", problem: "Tub drains slowly, getting worse.", window: 12, tech: "dana", status: "scheduled" },
   { key: "d4", customer: "Odalys Ferreira", phone: "(555) 010-0114", street: "64 Tollhouse Lane", x: 11, y: 2, type: "leak", problem: "Damp patch under the kitchen sink cabinet.", window: 14, tech: "dana", status: "scheduled" },
