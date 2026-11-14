@@ -36,7 +36,7 @@ export function MessageText({ message, reading }: { message: Message; reading: R
   return (
     <figure>
       <figcaption className="text-sm text-muted">{message.channel}, as it arrived</figcaption>
-      <blockquote className="mt-1 whitespace-pre-line border-l-4 border-line pl-3 leading-relaxed">{parts}</blockquote>
+      <blockquote className="mt-1 whitespace-pre-line border-l-4 border-ink pl-3 text-[1.0625rem] leading-relaxed">{parts}</blockquote>
     </figure>
   );
 }
@@ -47,7 +47,7 @@ const READ_URGENCY: Record<Reading["urgency"]["value"], string> = { emergency: "
 /** What the recorded AI reading made of the message. It describes; it does not decide. */
 export function ReadingPanel({ reading }: { reading: Reading }) {
   return (
-    <div className="rounded border border-line bg-paper p-3">
+    <div className="rounded-[3px] bg-[#f0f1f3] p-3">
       <p className="text-sm font-semibold text-muted">Read by AI (recorded). Marked words are what it quoted.</p>
       <p className="mt-1.5 leading-snug">{reading.summary}</p>
       <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[0.9375rem] leading-snug">
@@ -106,8 +106,8 @@ export function Options({ job, options, now }: { job: Job; options: Option[]; no
           if (!option.ok) return null;
           const tech = TECH_BY_ID[option.techId];
           return (
-            <li key={option.techId} className="flex flex-wrap items-start gap-x-3 gap-y-2 py-2.5">
-              <div className="min-w-0 flex-1 basis-56">
+            <li key={option.techId} className="flex flex-wrap items-start gap-x-3 gap-y-2 py-2.5 sm:flex-nowrap">
+              <div className="min-w-0 flex-1 basis-56 sm:basis-0">
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <TechName id={option.techId} full />
                   {index === 0 && !moving && <Tag tone="good">The rules&apos; first choice</Tag>}
@@ -115,7 +115,7 @@ export function Options({ job, options, now }: { job: Job; options: Option[]; no
                 </p>
                 <p className="mt-1 text-[0.9375rem] leading-snug text-muted">{option.reasons.join(". ")}.</p>
               </div>
-              <ActionButton action={assignAction.bind(null, { id: job.id, techId: option.techId })} pendingLabel="Booking" variant={index === 0 && !moving ? "primary" : "quiet"}>
+              <ActionButton action={assignAction.bind(null, { id: job.id, techId: option.techId })} pendingLabel="Booking" variant={index === 0 && !moving ? "primary" : "quiet"} className="sm:flex-none">
                 {moving ? `Move to ${tech.first}` : `Send ${tech.first}`}
               </ActionButton>
             </li>
@@ -138,8 +138,8 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
   const hold = job.status === "hold";
   const emergency = job.urgency === "emergency" && !hold;
   return (
-    <article id={`job-${job.id}`} className={`panel overflow-hidden ${hold || emergency ? "border-flag" : ""}`}>
-      <header className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b px-4 py-2.5 ${hold || emergency ? "border-flag bg-flag-tint" : "border-line bg-paper"}`}>
+    <article id={`job-${job.id}`} className={`panel overflow-hidden border-l-8 ${hold || emergency ? "border-flag" : job.urgency === "today" ? "border-l-hivis" : "border-l-muted"}`}>
+      <header className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b px-4 py-2.5 ${hold || emergency ? "border-flag bg-flag-tint" : "border-line"}`}>
         <h3 className="text-xl font-bold">
           <Link href={`/jobs/${job.id}`} className="underline decoration-line underline-offset-4 hover:decoration-ink">
             {job.customer}

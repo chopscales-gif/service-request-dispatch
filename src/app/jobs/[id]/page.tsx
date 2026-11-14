@@ -27,20 +27,20 @@ export default async function JobPage({ params }: PageProps<"/jobs/[id]">) {
     </>
   );
   return (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:px-6">
+    <main className="mx-auto w-full max-w-[88rem] flex-1 px-4 py-6 sm:px-6">
       <Link href="/" className="font-semibold underline underline-offset-4">
         Back to the board
       </Link>
       <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <h1 className="text-3xl font-bold">{job.customer}</h1>
+        <h1 className="text-3xl lg:text-4xl">{job.customer}</h1>
         <Tag tone={job.status === "done" ? "quiet" : "good"}>{STATUS_LABEL[job.status]}</Tag>
         <UrgencyTag job={job} />
         {slot && slot.late > 0 && job.status !== "done" && job.status !== "on_site" && <Tag tone="alert">{fmtDuration(slot.late)} late</Tag>}
       </div>
 
-      <div className="mt-5 grid items-start gap-6 lg:grid-cols-2">
+      <div className="mt-5 grid items-start gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div className="space-y-5">
-          <section className="panel p-4">
+          <section className="rounded-[3px] border-2 border-ink bg-surface p-4">
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 leading-snug">
               {row("Job", job.type ? `${JOB_TYPES[job.type].label}, about ${fmtDuration(job.est + job.extra)} on site` : "Not decided yet")}
               {row("Problem", job.problem)}
@@ -98,7 +98,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[id]">) {
             <ol className="mt-2 space-y-1.5 leading-snug">
               {detail.history.map((event) => (
                 <li key={event.id} className="grid grid-cols-[5rem_1fr] gap-x-2">
-                  <span className="font-display font-semibold tabular-nums text-muted">{fmtTime(event.at)}</span>
+                  <span className="font-semibold tabular-nums text-muted">{fmtTime(event.at)}</span>
                   <span>{event.text}</span>
                 </li>
               ))}

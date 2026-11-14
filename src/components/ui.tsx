@@ -34,8 +34,8 @@ export function TechName({ id, full = false }: { id: string | null; full?: boole
 }
 
 export function Tag({ tone, children }: { tone: "alert" | "warn" | "quiet" | "good"; children: React.ReactNode }) {
-  const look = { alert: "bg-flag text-white", warn: "bg-hivis text-ink", quiet: "bg-idle text-ink", good: "bg-accent-tint text-accent-deep" }[tone];
-  return <span className={`inline-block rounded-sm px-1.5 py-0.5 text-sm font-semibold leading-tight ${look}`}>{children}</span>;
+  const look = { alert: "bg-flag text-white", warn: "bg-hivis text-ink", quiet: "bg-idle text-ink", good: "bg-ink text-white" }[tone];
+  return <span className={`inline-block rounded-[3px] px-1.5 py-0.5 text-sm font-semibold leading-tight ${look}`}>{children}</span>;
 }
 
 export function UrgencyTag({ job }: { job: Pick<Job, "urgency" | "status"> }) {

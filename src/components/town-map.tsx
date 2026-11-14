@@ -26,18 +26,18 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
   // Everything a name must not be drawn across.
   const markers = [...vans, ...stops, ...waiting, SHOP];
   return (
-    <figure className="panel overflow-hidden">
-      <svg viewBox={`-0.8 -0.8 ${GRID.width + 1.6} ${GRID.height + 1.6}`} role="img" aria-label={`Drawing of ${TOWN} with each van and today's remaining stops`} className="block w-full bg-[#eef3f0]">
-        <path d="M 21 5.5 C 18.6 6.6 19.4 9.4 19.9 11 C 20.2 12 20.6 12.6 21 12.8 Z" fill="#cfe3ea" />
-        <path d="M 1.6 -1 C 2.6 2 1.2 4.4 2 7 C 2.6 9 1.4 12 2.2 15" fill="none" stroke="#cfe3ea" strokeWidth="0.45" />
+    <figure className="overflow-hidden rounded-[3px] border-2 border-ink bg-surface">
+      <svg viewBox={`-0.8 -0.8 ${GRID.width + 1.6} ${GRID.height + 1.6}`} role="img" aria-label={`Drawing of ${TOWN} with each van and today's remaining stops`} className="block w-full bg-[#dfe1e4]">
+        <path d="M 21 5.5 C 18.6 6.6 19.4 9.4 19.9 11 C 20.2 12 20.6 12.6 21 12.8 Z" fill="#bcd6e6" />
+        <path d="M 1.6 -1 C 2.6 2 1.2 4.4 2 7 C 2.6 9 1.4 12 2.2 15" fill="none" stroke="#bcd6e6" strokeWidth="0.45" />
         {Array.from({ length: GRID.width + 1 }, (_, x) => (
           <line key={`x${x}`} x1={x} y1={-0.3} x2={x} y2={GRID.height + 0.3} stroke="#ffffff" strokeWidth={x === SHOP.x ? 0.22 : 0.1} />
         ))}
         {Array.from({ length: GRID.height + 1 }, (_, y) => (
           <line key={`y${y}`} x1={-0.3} y1={y} x2={GRID.width + 0.3} y2={y} stroke="#ffffff" strokeWidth={y === SHOP.y ? 0.22 : 0.1} />
         ))}
-        <rect x={SHOP.x - 0.38} y={SHOP.y - 0.38} width="0.76" height="0.76" fill="#14231d" />
-        <text x={SHOP.x} y={SHOP.y + 1.05} textAnchor="middle" fontSize="0.55" fontWeight="600" fill="#14231d">
+        <rect x={SHOP.x - 0.38} y={SHOP.y - 0.38} width="0.76" height="0.76" fill="#141414" />
+        <text x={SHOP.x} y={SHOP.y + 1.05} textAnchor="middle" fontSize="0.55" fontWeight="600" fill="#141414">
           Shop
         </text>
         {stops.map((job) => {
@@ -46,7 +46,7 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
         })}
         {waiting.map((job) => (
           <g key={job.id} transform={`translate(${job.x} ${job.y}) rotate(45)`}>
-            <rect x="-0.3" y="-0.3" width="0.6" height="0.6" fill={job.urgency === "emergency" || job.status === "hold" ? "#b3261e" : "#f4d40f"} stroke="#14231d" strokeWidth="0.08" />
+            <rect x="-0.3" y="-0.3" width="0.6" height="0.6" fill={job.urgency === "emergency" || job.status === "hold" ? "#c4281b" : "#ffcb05"} stroke="#141414" strokeWidth="0.08" />
             {(job.urgency === "emergency" || job.status === "hold") && (
               <text transform="rotate(-45)" y="0.19" textAnchor="middle" fontSize="0.5" fontWeight="700" fill="#ffffff">
                 !
@@ -55,7 +55,7 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
           </g>
         ))}
         {AREAS.map((area) => (
-          <text key={area.key} {...labelAt(area, markers)} textAnchor="middle" fontSize="0.62" fontWeight="600" fill="#4f6058" stroke="#eef3f0" strokeWidth="0.22" paintOrder="stroke" style={{ fontFamily: "var(--font-display)" }}>
+          <text key={area.key} {...labelAt(area, markers)} textAnchor="middle" fontSize="0.62" fontWeight="700" fill="#50545a" stroke="#dfe1e4" strokeWidth="0.22" paintOrder="stroke" style={{ fontStretch: "85%" }}>
             {area.name}
           </text>
         ))}

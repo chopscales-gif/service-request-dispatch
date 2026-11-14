@@ -6,10 +6,10 @@ export const metadata: Metadata = { title: "How this demo works" };
 export default function About() {
   const h2 = "mt-10 text-2xl font-bold";
   const p = "mt-3 leading-relaxed";
-  const link = "font-semibold text-accent-deep underline underline-offset-4";
+  const link = "font-semibold text-ink underline underline-offset-4";
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6">
-      <h1 className="text-4xl font-bold">How this demo works</h1>
+      <h1 className="text-4xl lg:text-5xl">How this demo works</h1>
       <p className="mt-3 text-lg leading-relaxed text-muted">
         This is a demonstration build by ChopMedia. It is not client work, and nothing in it is real: {COMPANY.name} is a fictional company, {COMPANY.town} is an invented town, and every
         customer, technician, address, phone number and message was made up for the demo.

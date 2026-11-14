@@ -28,7 +28,7 @@ const VIEWS = [
 export function DemoBar({ now }: { now: number | null }) {
   const view = viewOf(usePathname());
   return (
-    <div className="demo-chrome bg-ink text-sm text-white">
+    <div className="demo-chrome bg-steel text-sm text-white">
       <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-5 gap-y-2 px-4 py-2 sm:px-6">
         <p className="min-w-0 flex-1 basis-72 leading-snug">
           <strong className="font-bold">Demonstration build.</strong>{" "}
@@ -48,7 +48,7 @@ export function DemoBar({ now }: { now: number | null }) {
           <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-5 gap-y-2 px-4 py-2 sm:px-6">
             <nav aria-label="Whose screen" className="flex items-center gap-2">
               <span className="text-white/75">See it as</span>
-              <span className="flex overflow-hidden rounded border border-white/30">
+              <span className="flex overflow-hidden rounded-[3px] border border-white/40">
                 {VIEWS.map((item) => (
                   <Link
                     key={item.key}
@@ -68,6 +68,7 @@ export function DemoBar({ now }: { now: number | null }) {
           </div>
         </div>
       )}
+      <div className="tape" aria-hidden />
     </div>
   );
 }
@@ -86,7 +87,7 @@ function SkipAhead() {
             setError(result.ok ? null : result.error);
           })
         }
-        className="min-h-11 cursor-pointer rounded bg-hivis px-3 py-1.5 font-bold text-ink hover:brightness-95 disabled:opacity-60 sm:min-h-0"
+        className="min-h-11 cursor-pointer rounded-[3px] bg-white px-3 py-1.5 font-bold text-ink hover:bg-hivis disabled:opacity-60 sm:min-h-0"
       >
         {pending ? "Skipping ahead" : `Skip ahead ${STEP} minutes`}
       </button>
@@ -102,7 +103,7 @@ function SkipAhead() {
 function ResetButton() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="min-h-11 cursor-pointer rounded border border-white/30 px-3 py-1.5 font-semibold hover:border-white disabled:opacity-60 sm:min-h-0">
+    <button type="submit" disabled={pending} className="min-h-11 cursor-pointer rounded-[3px] border border-white/40 px-3 py-1.5 font-semibold hover:border-white disabled:opacity-60 sm:min-h-0">
       {pending ? "Resetting" : "Reset demo"}
     </button>
   );

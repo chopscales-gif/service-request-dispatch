@@ -45,8 +45,8 @@ export function RequestForm({ plan, now, own, max }: Props) {
   // The demo stops taking bookings at its limit, and says so before anyone fills the form in.
   if (own >= max)
     return (
-      <div role="status" className="panel border-accent bg-accent-tint p-4 leading-snug">
-        <h2 className="text-xl font-bold">You have used all {max} bookings in this demo</h2>
+      <div role="status" className="max-w-2xl leading-snug">
+        <h2 className="text-2xl font-bold">You have used all {max} bookings in this demo</h2>
         <p className="mt-1.5">Each visitor can book {max} visits of their own, which keeps the sample day a sensible size. Your bookings are listed above and can still be followed.</p>
         <p className="mt-1.5">
           To book again, press <strong className="font-semibold">Reset demo</strong> in the bar at the top. That puts the day back to how it started.
@@ -55,10 +55,10 @@ export function RequestForm({ plan, now, own, max }: Props) {
     );
 
   return (
-    <form onSubmit={submit} className="space-y-6">
+    <form onSubmit={submit} className="grid gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
       <fieldset>
         <legend className="font-display text-xl font-bold">What is wrong?</legend>
-        <div className="mt-2 space-y-2">
+        <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
           {PROBLEM_KEYS.map((key) => (
             <label key={key} className="choice">
               <input type="radio" name="problem" checked={problem === key} onChange={() => setProblem(key)} />
@@ -73,18 +73,18 @@ export function RequestForm({ plan, now, own, max }: Props) {
       </fieldset>
 
       {problem === "gas" ? (
-        <div role="alert" className="rounded-md border-2 border-flag bg-flag-tint p-4 leading-relaxed">
-          <h2 className="text-2xl font-bold text-flag">Leave the house now</h2>
+        <div role="alert" className="self-start rounded-[3px] border-2 border-flag bg-flag-tint p-5 leading-relaxed lg:p-6">
+          <h2 className="text-3xl font-extrabold text-flag">Leave the house now</h2>
           <p className="mt-1.5">
             Take everyone with you. Do not use light switches, phones or anything with a flame indoors. From outside, call your gas company&apos;s emergency line or <strong className="font-semibold">911</strong>.
           </p>
           <p className="mt-1.5">We cannot book a visit for a smell of gas. Once the gas company says it is safe, call us on {COMPANY.phone} and we will come.</p>
         </div>
       ) : (
-        <>
+        <div className="space-y-6">
           <fieldset>
             <legend className="font-display text-xl font-bold">How soon?</legend>
-            <div className="mt-2 space-y-2">
+            <div className="mt-2 grid gap-2 sm:grid-cols-2">
               <label className="choice">
                 <input type="radio" name="urgency" checked={emergency === true} onChange={() => setEmergency(true)} />
                 <span>
@@ -102,6 +102,7 @@ export function RequestForm({ plan, now, own, max }: Props) {
             </div>
           </fieldset>
 
+          <div className="grid gap-x-4 gap-y-6 sm:grid-cols-2">
           <div>
             <label htmlFor="area" className="block font-display text-xl font-bold">
               Which part of {COMPANY.town}?
@@ -123,8 +124,9 @@ export function RequestForm({ plan, now, own, max }: Props) {
             </label>
             <input id="name" className="field mt-2" maxLength={40} autoComplete="off" value={name} onChange={(event) => setName(event.target.value)} placeholder="Any made-up name" />
           </div>
+          </div>
 
-          {ready && emergency && <p className="panel border-accent bg-accent-tint p-4 leading-snug">We will send the technician who can reach you soonest, ahead of other work. You will see who and when on the next page.</p>}
+          {ready && emergency && <p className="rounded-[3px] border-l-8 border-ink bg-hivis-tint p-4 leading-snug">We will send the technician who can reach you soonest, ahead of other work. You will see who and when on the next page.</p>}
 
           {ready && !emergency && (
             <fieldset>
@@ -132,11 +134,11 @@ export function RequestForm({ plan, now, own, max }: Props) {
               {offers.length > 0 ? (
                 <>
                   <p className="mt-1 text-sm leading-snug text-muted">These are the two-hour windows a technician with the right skills can keep without making another customer late.</p>
-                  <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  <div className="mt-2 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
                     {offers.map((offer) => (
                       <label key={offer.start} className="choice">
                         <input type="radio" name="window" checked={chosen === offer.start} onChange={() => setWindowStart(offer.start)} />
-                        <span>{fmtWindow(offer.start, offer.end)}</span>
+                        <span className="tabular-nums">{fmtWindow(offer.start, offer.end)}</span>
                       </label>
                     ))}
                   </div>
@@ -148,7 +150,7 @@ export function RequestForm({ plan, now, own, max }: Props) {
           )}
 
           <div>
-            <button type="submit" disabled={!canSend || pending} className="btn btn-primary w-full sm:w-auto">
+            <button type="submit" disabled={!canSend || pending} className="btn btn-primary w-full px-8 py-3 text-lg sm:w-auto">
               {pending ? "Booking" : emergency ? "Send someone now" : ready && offers.length === 0 ? "Ask for tomorrow morning" : "Book this visit"}
             </button>
             {!canSend && !pending && <p className="mt-2 text-sm text-muted">Answer every question above to book.</p>}
@@ -158,7 +160,7 @@ export function RequestForm({ plan, now, own, max }: Props) {
               </p>
             )}
           </div>
-        </>
+        </div>
       )}
     </form>
   );

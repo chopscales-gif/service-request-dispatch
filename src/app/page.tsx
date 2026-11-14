@@ -10,13 +10,13 @@ import { getCtx } from "@/server/session";
 export default async function BoardPage() {
   const view = await board(await getCtx());
   return (
-    <main className="mx-auto w-full max-w-[88rem] flex-1 space-y-6 px-4 py-6 sm:px-6">
+    <main className="mx-auto w-full max-w-[88rem] flex-1 space-y-6 px-4 py-5 sm:px-6">
       {view.now === START_NOW && (
-        <section aria-labelledby="guide-title" className="panel p-4 sm:p-5">
-          <h2 id="guide-title" className="text-xl font-bold">
+        <section aria-labelledby="guide-title" className="grid gap-x-8 gap-y-2 rounded-[3px] bg-hivis-tint px-4 py-3 sm:px-5 xl:grid-cols-[auto_1fr] xl:items-baseline">
+          <h2 id="guide-title" className="text-lg font-bold">
             Three things to try
           </h2>
-          <ol className="mt-2 grid list-decimal gap-x-8 gap-y-2 pl-5 leading-snug md:grid-cols-3">
+          <ol className="grid list-decimal gap-x-10 gap-y-2 pl-5 text-[0.9375rem] leading-snug marker:font-bold md:grid-cols-3">
             <li>
               Read <a href="#inbox" className="font-semibold underline underline-offset-4">Renee Kowalczyk&apos;s message</a> below. See what the AI pulled out of it, then who the rules would send and why. Send someone.
             </li>
@@ -33,8 +33,8 @@ export default async function BoardPage() {
       {view.proposal && <Proposal view={view} />}
 
       <section aria-labelledby="board-title">
-        <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-          <h1 id="board-title" className="text-3xl font-bold">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <h1 id="board-title" className="text-3xl lg:text-4xl">
             Today&apos;s board
           </h1>
           <p className="text-muted">
@@ -45,7 +45,7 @@ export default async function BoardPage() {
         <Board jobs={view.jobs} projection={view.projection} now={view.now} />
       </section>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_24rem]">
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] xl:grid-cols-[minmax(0,1fr)_26rem]">
         <section id="inbox" aria-labelledby="inbox-title" className="scroll-mt-4 space-y-4">
           <h2 id="inbox-title" className="text-2xl font-bold">
             Waiting for you

@@ -34,13 +34,13 @@ export function Board({ jobs, projection, now }: Props) {
   const { slots } = projection;
   return (
     <>
-      <div className="panel hidden overflow-hidden md:block">
+      <div className="hidden overflow-hidden rounded-[3px] border-2 border-ink bg-surface md:block">
         <div className="relative">
-          <div className="grid grid-cols-[11rem_1fr] border-b border-line bg-paper text-sm text-muted">
-            <div className="px-3 py-1.5 font-semibold">Technician</div>
-            <div className="relative h-8">
+          <div className="on-dark grid grid-cols-[12.5rem_1fr] bg-ink text-sm text-white">
+            <div className="self-end px-3 py-1.5 font-semibold">Technician</div>
+            <div className="relative h-14">
               {HOURS.map((hour) => (
-                <span key={hour} className="absolute top-1.5 pl-1.5 font-display font-semibold" style={{ left: pct(hour) }}>
+                <span key={hour} className="absolute bottom-1.5 pl-1.5 font-semibold tabular-nums" style={{ left: pct(hour) }}>
                   {fmtHour(hour)}
                 </span>
               ))}
@@ -50,13 +50,12 @@ export function Board({ jobs, projection, now }: Props) {
             const day = dayOf(jobs, slots, tech.id);
             const overtime = projection.techs[tech.id].overtime;
             return (
-              <div key={tech.id} data-tone={tech.tone} className="grid grid-cols-[11rem_1fr] border-b border-line last:border-b-0">
-                <div className="border-r border-line px-3 py-1.5 leading-tight">
-                  <p className="flex items-center gap-1.5 font-display text-base font-bold">
-                    <span className="dot" aria-hidden />
+              <div key={tech.id} data-tone={tech.tone} className="grid grid-cols-[12.5rem_1fr] border-b border-line last:border-b-0">
+                <div className="flex flex-col justify-center border-l-8 border-r border-(--tone) border-r-line px-3 py-1.5 leading-tight">
+                  <p className="font-display text-base font-bold">
                     {tech.name}
                   </p>
-                  <p className="mt-0.5 truncate text-sm text-muted">{overtime > 0 ? <span className="font-semibold text-flag">{fmtDuration(overtime)} past 5 PM</span> : doing(day, slots)}</p>
+                  <p className="mt-0.5 truncate text-sm text-muted font-stretch-[88%]">{overtime > 0 ? <span className="font-semibold text-flag">{fmtDuration(overtime)} past 5 PM</span> : doing(day, slots)}</p>
                 </div>
                 <div className="board-track">
                   <div className="board-overtime" aria-hidden />
@@ -79,7 +78,7 @@ export function Board({ jobs, projection, now }: Props) {
                           style={{ left: pct(from), width: `calc(${pct(until)} - ${pct(from)})` }}
                         >
                           {surname(job.customer)}
-                          {late && <span className="ml-1.5 font-sans text-xs font-bold">{slot.late} min late</span>}
+                          {late && <span className="text-xs font-bold">{slot.late} min late</span>}
                         </Link>
                       </span>
                     );
@@ -88,13 +87,14 @@ export function Board({ jobs, projection, now }: Props) {
               </div>
             );
           })}
-          <div className="pointer-events-none absolute inset-y-0 left-[11rem] right-0" aria-hidden>
+          <div className="pointer-events-none absolute inset-y-0 left-[12.5rem] right-0" aria-hidden>
             <div className="board-now" style={{ left: pct(now) }}>
-              <span className="absolute left-1/2 top-0 -translate-x-1/2 whitespace-nowrap rounded-b-sm bg-hivis px-1.5 text-xs font-bold leading-5 text-ink">{fmtTime(now)}</span>
+              <span className="absolute inset-x-0 top-0 h-14 bg-hivis" />
+              <span className="absolute left-1/2 top-1 -translate-x-1/2 whitespace-nowrap rounded-[3px] bg-hivis px-1.5 text-sm font-bold leading-5 text-ink tabular-nums">Now {fmtTime(now)}</span>
             </div>
           </div>
         </div>
-        <p className="flex flex-wrap gap-x-5 gap-y-1 border-t border-line bg-paper px-3 py-2 text-sm text-muted">
+        <p className="flex flex-wrap gap-x-5 gap-y-1 border-t border-line bg-[#f3f4f5] px-3 py-2 text-sm text-muted">
           <span>Solid: on site now.</span>
           <span>Outlined: still to come.</span>
           <span>Grey: done.</span>
@@ -108,9 +108,8 @@ export function Board({ jobs, projection, now }: Props) {
         {TECHS.map((tech) => {
           const day = dayOf(jobs, slots, tech.id).filter((job) => job.status !== "done");
           return (
-            <section key={tech.id} data-tone={tech.tone} className="panel overflow-hidden">
-              <h3 className="flex items-center gap-2 border-b border-line bg-paper px-3 py-2 text-lg font-bold">
-                <span className="dot" aria-hidden />
+            <section key={tech.id} data-tone={tech.tone} className="panel overflow-hidden border-l-8 border-l-(--tone)">
+              <h3 className="border-b border-line px-3 py-2 text-lg font-bold">
                 {tech.name}
               </h3>
               {day.length === 0 && <p className="px-3 py-2 text-muted">Finished for the day.</p>}
@@ -120,8 +119,8 @@ export function Board({ jobs, projection, now }: Props) {
                   const late = slot.late > 0 && (job.status === "scheduled" || job.status === "en_route");
                   return (
                     <li key={job.id}>
-                      <Link href={`/jobs/${job.id}`} className="flex items-baseline gap-3 px-3 py-2.5">
-                        <span className="w-20 flex-none font-display font-semibold tabular-nums">{fmtTime(slot.arrive)}</span>
+                      <Link href={`/jobs/${job.id}`} className="flex min-h-11 items-baseline gap-3 px-3 py-2.5">
+                        <span className="w-20 flex-none font-bold tabular-nums">{fmtTime(slot.arrive)}</span>
                         <span className="min-w-0 flex-1">
                           <span className="font-semibold">{job.customer}</span>
                           <span className="block text-sm text-muted">{job.type && JOB_TYPES[job.type].label}</span>

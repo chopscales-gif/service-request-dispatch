@@ -1,21 +1,28 @@
 @import "tailwindcss";
 
+/*
+ * Tamarack's look is its vans: yellow bodywork with black lettering, parked on
+ * grey concrete. The dispatcher's board is the steel whiteboard on the office
+ * wall. One typeface, Archivo, set at three widths: wide where the company is
+ * speaking, normal for reading, narrow where the board needs to fit a day in.
+ */
 @theme inline {
-  --color-ink: #14231d;
-  --color-paper: #f1f5f3;
+  --color-ink: #141414;
+  --color-paper: #e7e8ea;
   --color-surface: #ffffff;
-  --color-line: #cbd6d0;
-  --color-muted: #4f6058;
-  --color-accent: #1d6b4f;
-  --color-accent-deep: #14503a;
-  --color-accent-tint: #dff0e8;
-  --color-hivis: #f4d40f;
-  --color-hivis-tint: #fdf4b8;
-  --color-flag: #b3261e;
-  --color-flag-tint: #fbe4e1;
-  --color-idle: #e4ebe7;
-  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-barlow-condensed), var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+  --color-line: #c3c6cb;
+  --color-muted: #50545a;
+  --color-accent: #141414;
+  --color-accent-deep: #000000;
+  --color-accent-tint: #fff1b0;
+  --color-hivis: #ffcb05;
+  --color-hivis-tint: #fff1b0;
+  --color-flag: #c4281b;
+  --color-flag-tint: #fbe5e2;
+  --color-idle: #dcdee2;
+  --color-steel: #2b2d31;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -26,43 +33,64 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+.font-display {
   font-family: var(--font-display);
-  letter-spacing: 0.005em;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-stretch: 125%;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 3px solid var(--color-ink);
   outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-hivis);
 }
 
+.on-dark :focus-visible,
 .demo-chrome :focus-visible {
-  outline-color: #ffffff;
+  outline-color: var(--color-hivis);
+  box-shadow: none;
 }
 
 /* One colour per technician. Always shown beside the name, never as the only cue. */
 [data-tone="a"] {
-  --tone: #2459a6;
-  --tone-tint: #dfe9f7;
+  --tone: #1d5fc2;
+  --tone-tint: #dde8f8;
 }
 [data-tone="b"] {
   --tone: #7b3fa0;
   --tone-tint: #eee2f5;
 }
 [data-tone="c"] {
-  --tone: #0b7a82;
-  --tone-tint: #d9eff0;
+  --tone: #0a7a70;
+  --tone-tint: #d8efec;
 }
 [data-tone="d"] {
-  --tone: #a3326b;
-  --tone-tint: #f6dfea;
+  --tone: #b0306a;
+  --tone-tint: #f7dfea;
 }
 [data-tone="e"] {
-  --tone: #56606e;
-  --tone-tint: #e6e9ee;
+  --tone: #8a4b12;
+  --tone-tint: #f3e6d8;
 }
 
 @layer components {
+  /* Barrier tape: the edge between the demo's own controls and the company's screens. */
+  .tape {
+    box-sizing: content-box;
+    height: 0.5rem;
+    background: repeating-linear-gradient(135deg, var(--color-hivis) 0 14px, var(--color-ink) 14px 28px);
+    /* A black edge, so the yellow stripes still read as tape above the yellow customer header. */
+    border-bottom: 3px solid var(--color-ink);
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
@@ -70,24 +98,27 @@ h3 {
     gap: 0.5rem;
     min-height: 2.75rem;
     padding: 0.5rem 1.125rem;
-    border-radius: 0.25rem;
-    border: 1px solid transparent;
+    border-radius: 0.1875rem;
+    border: 2px solid transparent;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
+    font-stretch: 105%;
     line-height: 1.2;
     cursor: pointer;
-    transition: background-color 120ms, border-color 120ms;
+    transition: background-color 120ms, border-color 120ms, color 120ms;
   }
   .btn:disabled {
     cursor: not-allowed;
     opacity: 0.55;
   }
   .btn-primary {
-    background: var(--color-accent);
+    background: var(--color-ink);
+    border-color: var(--color-ink);
     color: #ffffff;
   }
   .btn-primary:hover:not(:disabled) {
-    background: var(--color-accent-deep);
+    background: var(--color-hivis);
+    color: var(--color-ink);
   }
   .btn-quiet {
     background: var(--color-surface);
@@ -110,8 +141,8 @@ h3 {
     width: 100%;
     min-height: 2.75rem;
     padding: 0.375rem 0.625rem;
-    border: 1px solid var(--color-line);
-    border-radius: 0.25rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 0.1875rem;
     background: #ffffff;
     font-size: 1rem;
   }
@@ -119,7 +150,7 @@ h3 {
   .panel {
     background: var(--color-surface);
     border: 1px solid var(--color-line);
-    border-radius: 0.375rem;
+    border-radius: 0.1875rem;
   }
 
   /* A choice in a form, as a whole row that can be tapped. */
@@ -127,20 +158,36 @@ h3 {
     display: flex;
     align-items: flex-start;
     gap: 0.625rem;
+    min-height: 2.75rem;
     padding: 0.625rem 0.75rem;
-    border: 1px solid var(--color-line);
-    border-radius: 0.25rem;
+    border: 2px solid var(--color-line);
+    border-radius: 0.1875rem;
     background: var(--color-surface);
+    line-height: 1.3;
     cursor: pointer;
   }
+  .choice:hover {
+    border-color: var(--color-ink);
+  }
   .choice:has(:checked) {
-    border-color: var(--color-accent);
-    background: var(--color-accent-tint);
-    box-shadow: inset 0 0 0 1px var(--color-accent);
+    border-color: var(--color-ink);
+    background: var(--color-hivis);
+    font-weight: 600;
+  }
+  .choice:has(:focus-visible) {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 2px;
   }
   .choice input {
-    margin-top: 0.3rem;
-    accent-color: var(--color-accent);
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0.1rem;
+    accent-color: var(--color-ink);
+  }
+  .choice input:focus-visible {
+    outline: none;
+    box-shadow: none;
   }
 
   /* Words in a customer's message that the AI reading quoted. */
@@ -148,7 +195,7 @@ h3 {
     background: var(--color-hivis-tint);
     color: var(--color-ink);
     padding: 0.05em 0.1em;
-    border-radius: 0.15em;
+    box-shadow: inset 0 -2px 0 var(--color-hivis);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
@@ -169,14 +216,14 @@ h3 {
    */
   .board-track {
     position: relative;
-    height: 3.5rem;
-    background-image: linear-gradient(to right, var(--color-line) 1px, transparent 1px);
-    background-size: 10% 100%;
+    height: 4rem;
+    background-image: linear-gradient(to right, var(--color-line) 1px, transparent 1px), linear-gradient(to right, #e9eaed 1px, transparent 1px);
+    background-size: 10% 100%, 5% 100%;
   }
   .board-overtime {
     position: absolute;
     inset: 0 0 0 90%;
-    background: repeating-linear-gradient(135deg, transparent 0 6px, rgb(20 35 29 / 0.07) 6px 8px);
+    background: repeating-linear-gradient(135deg, transparent 0 6px, rgb(20 20 20 / 0.09) 6px 8px);
   }
   .magnet {
     position: absolute;
@@ -187,18 +234,20 @@ h3 {
     overflow: hidden;
     padding: 0 0.375rem;
     border: 2px solid var(--tone);
-    border-radius: 0.25rem;
+    border-left-width: 6px;
+    border-radius: 0.1875rem;
     background: var(--color-surface);
     color: var(--color-ink);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.9375rem;
+    font-weight: 650;
+    font-stretch: 80%;
     line-height: 1.1;
     white-space: nowrap;
-    box-shadow: 0 1px 0 rgb(20 35 29 / 0.25);
+    box-shadow: 0 2px 0 rgb(20 20 20 / 0.22);
     z-index: 1;
   }
-  .magnet:hover {
+  .magnet:hover,
+  .magnet:focus-visible {
     z-index: 3;
     overflow: visible;
     min-width: max-content;
@@ -214,6 +263,10 @@ h3 {
     box-shadow: none;
   }
   .magnet[data-late="true"] {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.125rem;
     border-color: var(--color-flag);
     background: var(--color-flag-tint);
     color: var(--color-flag);
@@ -230,16 +283,26 @@ h3 {
     bottom: 0;
     width: 3px;
     margin-left: -1px;
-    background: var(--color-hivis);
-    box-shadow: 0 0 0 1px rgb(20 35 29 / 0.35);
+    background: var(--color-ink);
     /* Behind the magnets, so the line never cuts through a customer's name. */
     z-index: 0;
   }
+}
+
+/* Outside the layer so it wins over the grey helper-text utility. */
+.choice:has(:checked) .text-muted {
+  color: var(--color-ink);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .magnet,
   .board-now {
     transition: left 400ms ease, width 400ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
   }
 }

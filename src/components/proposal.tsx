@@ -19,8 +19,9 @@ export function Proposal({ view }: { view: Board }) {
   const moves = proposal.changes.filter((change) => change.fromTech !== change.toTech);
   const shifts = proposal.changes.filter((change) => change.fromTech === change.toTech);
   return (
-    <section aria-labelledby="proposal-title" className="rounded-md border-2 border-ink bg-hivis-tint p-4 sm:p-5">
-      <h2 id="proposal-title" className="text-2xl font-bold">
+    <section aria-labelledby="proposal-title" className="grid gap-x-10 rounded-[3px] border-2 border-ink bg-hivis p-4 sm:p-5 xl:grid-cols-2">
+      <div>
+      <h2 id="proposal-title" className="text-2xl font-extrabold lg:text-3xl">
         {late.length === 1 ? "One customer" : `${late.length} customers`} will be kept waiting longer than we said
       </h2>
       <ul className="mt-2 space-y-1 leading-snug">
@@ -33,10 +34,12 @@ export function Proposal({ view }: { view: Board }) {
           );
         })}
       </ul>
+      </div>
 
+      <div className="mt-4 xl:mt-0">
       {proposal.changes.length > 0 ? (
         <>
-          <h3 className="mt-4 text-xl font-bold">Proposed reshuffle (written rules, not AI)</h3>
+          <h3 className="text-xl font-bold">Proposed reshuffle (written rules, not AI)</h3>
           <ul className="mt-1.5 space-y-1 leading-snug">
             {moves.map((change) => (
               <li key={change.id}>
@@ -52,7 +55,7 @@ export function Proposal({ view }: { view: Board }) {
           </ul>
         </>
       ) : (
-        <p className="mt-4 leading-snug">
+        <p className="leading-snug">
           <strong className="font-semibold">No reshuffle helps.</strong> Nobody else with the right skills can get there sooner without making someone else late.
         </p>
       )}
@@ -65,7 +68,8 @@ export function Proposal({ view }: { view: Board }) {
       <ActionButton action={acceptReshuffleAction.bind(null, proposal.signature)} pendingLabel="Updating the board" className="mt-3">
         {proposal.changes.length > 0 ? "Accept the reshuffle and queue the texts" : "Queue texts with the new times"}
       </ActionButton>
-      <p className="mt-2 text-sm text-muted">Texts go to the outbox under Texts to customers. Nothing is sent.</p>
+      <p className="mt-2 text-sm">Texts go to the outbox under Texts to customers. Nothing is sent.</p>
+      </div>
     </section>
   );
 }
