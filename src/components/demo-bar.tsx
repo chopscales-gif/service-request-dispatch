@@ -32,6 +32,9 @@ export function DemoBar({ now }: { now: number | null }) {
       {/* On a phone the bar is three short rows, so the company's own screen starts as high as it can. */}
       <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-2.5 px-4 py-1 sm:gap-x-5 sm:gap-y-2 sm:px-6 sm:py-2">
         <p className="min-w-0 flex-auto leading-snug sm:flex-1 sm:basis-72">
+          <a href="https://chopmedia.vercel.app/#service-company" className="mr-3 whitespace-nowrap font-semibold underline decoration-white/40 underline-offset-4 hover:decoration-white">
+            ← All demos
+          </a>{" "}
           <strong className="inline-block whitespace-nowrap rounded-full bg-sun px-2 py-0.5 text-[0.8125rem] font-semibold text-ink sm:px-2.5 sm:text-[length:inherit]">Demonstration build</strong>{" "}
           <span className="hidden pl-1 text-white/75 sm:inline">A fictional plumbing company in an invented town. The AI readings were recorded ahead of time, and no text is ever sent.</span>
         </p>
