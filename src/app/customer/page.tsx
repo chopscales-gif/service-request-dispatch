@@ -34,7 +34,7 @@ export default async function CustomerPage() {
             <p className="font-semibold">Where we work:</p>
             <ul className="mt-2 flex flex-wrap gap-2">
               {AREAS.map((area) => (
-                <li key={area.key} className="rounded-full border border-[#cfd6f3] bg-surface/90 px-3.5 py-1.5 text-[0.9375rem] font-medium shadow-rest">
+                <li key={area.key} className="rounded-full border border-[#cdd5e4] bg-surface/90 px-3.5 py-1.5 text-[0.9375rem] font-medium shadow-rest">
                   {area.name}
                 </li>
               ))}

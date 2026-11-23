@@ -27,7 +27,7 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
   const markers = [...vans, ...stops, ...waiting, SHOP];
   return (
     <figure className="sheet overflow-hidden">
-      <svg viewBox={`-0.8 -0.8 ${GRID.width + 1.6} ${GRID.height + 1.6}`} role="img" aria-label={`Drawing of ${TOWN} with each van and today's remaining stops`} className="block w-full bg-[#edf0fb]">
+      <svg viewBox={`-0.8 -0.8 ${GRID.width + 1.6} ${GRID.height + 1.6}`} role="img" aria-label={`Drawing of ${TOWN} with each van and today's remaining stops`} className="block w-full bg-[#edf1f7]">
         <path d="M 21 5.5 C 18.6 6.6 19.4 9.4 19.9 11 C 20.2 12 20.6 12.6 21 12.8 Z" fill="#cddffa" />
         <path d="M 1.6 -1 C 2.6 2 1.2 4.4 2 7 C 2.6 9 1.4 12 2.2 15" fill="none" stroke="#cddffa" strokeWidth="0.45" />
         {Array.from({ length: GRID.width + 1 }, (_, x) => (
@@ -55,7 +55,7 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
           </g>
         ))}
         {AREAS.map((area) => (
-          <text key={area.key} {...labelAt(area, markers)} textAnchor="middle" fontSize="0.56" fontWeight="600" fill="#596085" stroke="#edf0fb" strokeWidth="0.22" paintOrder="stroke">
+          <text key={area.key} {...labelAt(area, markers)} textAnchor="middle" fontSize="0.56" fontWeight="600" fill="#596085" stroke="#edf1f7" strokeWidth="0.22" paintOrder="stroke">
             {area.name}
           </text>
         ))}

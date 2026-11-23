@@ -85,7 +85,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[id]">) {
             {detail.texts.length === 0 && <p className="mt-2 text-muted">None yet.</p>}
             <ul className="mt-3 space-y-2">
               {detail.texts.map((text) => (
-                <li key={text.id} className="rounded-2xl rounded-bl-md bg-[#f1f3fb] px-4 py-3 leading-snug">
+                <li key={text.id} className="rounded-2xl rounded-bl-md bg-[#f0f3f8] px-4 py-3 leading-snug">
                   <span className="block text-sm font-semibold text-muted">{fmtTime(text.at)}</span>
                   {text.body}
                 </li>

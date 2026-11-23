@@ -36,7 +36,7 @@ export function Board({ jobs, projection, now }: Props) {
     <>
       <div className="sheet hidden overflow-hidden md:block">
         <div className="relative">
-          <div className="grid grid-cols-[14rem_1fr] border-b border-line bg-[#f8f9fe] text-sm text-muted">
+          <div className="grid grid-cols-[14rem_1fr] border-b border-line bg-[#f6f8fb] text-sm text-muted">
             <div className="self-end px-5 py-2 font-medium">Technician</div>
             <div className="relative h-[4.5rem]">
               {HOURS.map((hour) => (
@@ -94,7 +94,7 @@ export function Board({ jobs, projection, now }: Props) {
             </div>
           </div>
         </div>
-        <p className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-t border-line bg-[#f8f9fe] px-5 py-3 text-sm text-muted">
+        <p className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-t border-line bg-[#f6f8fb] px-5 py-3 text-sm text-muted">
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-3.5 w-6 rounded-[5px] bg-accent" />
             Solid: on site now.
@@ -124,7 +124,7 @@ export function Board({ jobs, projection, now }: Props) {
           const day = dayOf(jobs, slots, tech.id).filter((job) => job.status !== "done");
           return (
             <section key={tech.id} data-tone={tech.tone} className="panel overflow-hidden">
-              <h3 className="flex items-center gap-2.5 border-b border-line bg-[#f8f9fe] px-4 py-2.5 text-lg font-semibold">
+              <h3 className="flex items-center gap-2.5 border-b border-line bg-[#f6f8fb] px-4 py-2.5 text-lg font-semibold">
                 <Avatar initial={tech.first[0]} className="size-8 text-sm" />
                 {tech.name}
               </h3>

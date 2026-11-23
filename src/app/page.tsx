@@ -12,7 +12,7 @@ export default async function BoardPage() {
   return (
     <main className="mx-auto w-full max-w-[88rem] flex-1 space-y-8 px-4 py-6 sm:px-6 lg:py-8">
       {view.now === START_NOW && (
-        <section aria-labelledby="guide-title" className="rounded-[1.25rem] border border-[#d5dbf8] bg-gradient-to-br from-accent-tint to-[#f6f7ff] px-5 py-4 sm:px-6 sm:py-5">
+        <section aria-labelledby="guide-title" className="rounded-[1.25rem] border border-[#d3dae8] bg-gradient-to-br from-accent-tint to-[#f6f8fb] px-5 py-4 sm:px-6 sm:py-5">
           <h2 id="guide-title" className="text-xl font-semibold">
             Three things to try
           </h2>

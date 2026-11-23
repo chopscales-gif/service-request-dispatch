@@ -19,7 +19,7 @@ export function SiteHeader() {
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`inline-flex min-h-11 items-center rounded-full px-4 font-semibold sm:min-h-10 ${active ? "bg-accent-tint text-accent-deep" : "text-muted hover:bg-idle hover:text-ink"}`}
+      className={`inline-flex min-h-11 items-center rounded-full px-4 font-semibold sm:min-h-10 ${active ? "bg-accent text-white" : "text-muted hover:bg-idle hover:text-ink"}`}
     >
       {label}
     </Link>
@@ -31,7 +31,7 @@ export function SiteHeader() {
         <p className="flex flex-wrap items-center gap-x-3 gap-y-0.5 py-3 leading-tight">
           <span className="flex items-center gap-2.5">
             <svg aria-hidden viewBox="0 0 28 28" className="size-7 flex-none">
-              <rect width="28" height="28" rx="9" fill="#3d4fd6" />
+              <rect width="28" height="28" rx="9" fill="#1c2247" />
               <path d="M14 5.5c3.4 4.1 5.6 7.1 5.6 10.1a5.6 5.6 0 0 1-11.2 0c0-3 2.2-6 5.6-10.1Z" fill="#ffffff" />
               <circle cx="16.3" cy="16.4" r="1.7" fill="#ffc44d" />
             </svg>

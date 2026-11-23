@@ -36,7 +36,7 @@ export function MessageText({ message, reading }: { message: Message; reading: R
   return (
     <figure>
       <figcaption className="text-sm font-medium text-muted">{message.channel}, as it arrived</figcaption>
-      <blockquote className="mt-2 whitespace-pre-line rounded-2xl rounded-tl-md bg-[#f1f3fb] px-4 py-3.5 text-[1.0625rem] leading-relaxed">{parts}</blockquote>
+      <blockquote className="mt-2 whitespace-pre-line rounded-2xl rounded-tl-md bg-[#f0f3f8] px-4 py-3.5 text-[1.0625rem] leading-relaxed">{parts}</blockquote>
     </figure>
   );
 }
@@ -47,10 +47,10 @@ const READ_URGENCY: Record<Reading["urgency"]["value"], string> = { emergency: "
 /** What the recorded AI reading made of the message. It describes; it does not decide. */
 export function ReadingPanel({ reading }: { reading: Reading }) {
   return (
-    <div className="rounded-2xl border border-[#d5dbf8] bg-gradient-to-b from-accent-tint to-[#f4f5fe] p-4">
+    <div className="rounded-2xl border border-[#d3dae8] bg-gradient-to-b from-accent-tint to-[#f6f8fb] p-4">
       <p className="text-sm font-semibold text-accent-deep">Read by AI (recorded). Marked words are what it quoted.</p>
       <p className="mt-2 leading-snug">{reading.summary}</p>
-      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 border-t border-[#d5dbf8] pt-3 text-[0.9375rem] leading-snug">
+      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 border-t border-[#d3dae8] pt-3 text-[0.9375rem] leading-snug">
         <dt className="text-muted">Job</dt>
         <dd className="font-semibold">{READ_TYPE[reading.job_type.value]}</dd>
         <dt className="text-muted">How soon</dt>
@@ -143,9 +143,9 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
   const emergency = job.urgency === "emergency" && !hold;
   return (
     <article id={`job-${job.id}`} className={`sheet overflow-hidden ${hold || emergency ? "border-[#f0b8c3]" : ""}`}>
-      <header className={`flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b px-5 py-3.5 ${hold || emergency ? "border-[#f5ccd4] bg-gradient-to-r from-flag-tint to-[#fff6f4]" : "border-line bg-[#f8f9fe]"}`}>
+      <header className={`flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b px-5 py-3.5 ${hold || emergency ? "border-[#f5ccd4] bg-gradient-to-r from-flag-tint to-[#fff6f4]" : "border-line bg-[#f6f8fb]"}`}>
         <h3 className="text-[1.375rem] font-semibold">
-          <Link href={`/jobs/${job.id}`} className="underline decoration-[#c5cdea] underline-offset-4 hover:decoration-ink">
+          <Link href={`/jobs/${job.id}`} className="underline decoration-[#c6cee0] underline-offset-4 hover:decoration-ink">
             {job.customer}
           </Link>
         </h3>
