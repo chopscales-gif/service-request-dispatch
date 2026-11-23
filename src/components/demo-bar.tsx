@@ -30,12 +30,12 @@ export function DemoBar({ now }: { now: number | null }) {
   return (
     <div className="demo-chrome bg-ink text-sm text-white">
       {/* On a phone the bar is three short rows, so the company's own screen starts as high as it can. */}
-      <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-3 px-4 py-1 sm:gap-x-5 sm:gap-y-2 sm:px-6 sm:py-2">
-        <p className="min-w-0 flex-1 leading-snug sm:basis-72">
-          <strong className="rounded-full bg-sun px-2.5 py-0.5 font-semibold text-ink">Demonstration build</strong>{" "}
+      <div className="mx-auto flex max-w-[88rem] flex-wrap items-center gap-x-2.5 px-4 py-1 sm:gap-x-5 sm:gap-y-2 sm:px-6 sm:py-2">
+        <p className="min-w-0 flex-auto leading-snug sm:flex-1 sm:basis-72">
+          <strong className="inline-block whitespace-nowrap rounded-full bg-sun px-2 py-0.5 text-[0.8125rem] font-semibold text-ink sm:px-2.5 sm:text-[length:inherit]">Demonstration build</strong>{" "}
           <span className="hidden pl-1 text-white/75 sm:inline">A fictional plumbing company in an invented town. The AI readings were recorded ahead of time, and no text is ever sent.</span>
         </p>
-        <Link href="/about" className="inline-flex min-h-11 items-center font-semibold underline decoration-white/40 underline-offset-4 hover:decoration-white sm:min-h-0">
+        <Link href="/about" className="inline-flex min-h-11 items-center whitespace-nowrap font-semibold max-sm:order-2 max-sm:-mt-1 max-sm:text-sm underline decoration-white/40 underline-offset-4 hover:decoration-white sm:min-h-0">
           How <span className="hidden sm:inline">&nbsp;this demo&nbsp;</span>
           <span className="sm:hidden">&nbsp;it&nbsp;</span> works
         </Link>
@@ -44,7 +44,7 @@ export function DemoBar({ now }: { now: number | null }) {
             <ResetButton />
           </form>
         )}
-        <p className="-mt-0.5 basis-full pb-1.5 text-[0.8125rem] leading-snug text-white/75 sm:hidden">Fictional company, recorded AI, no texts sent.</p>
+        <p className="order-1 -mt-1 min-w-0 flex-1 basis-3/5 text-[0.8125rem] leading-snug text-white/75 sm:hidden">Fictional company, recorded AI, no texts sent.</p>
       </div>
       {now !== null && (
         <div className="border-t border-white/10 bg-white/[0.06]">
@@ -109,7 +109,7 @@ function SkipAhead() {
 function ResetButton() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="min-h-11 cursor-pointer rounded-full border border-white/35 px-4 py-1.5 font-semibold hover:border-white disabled:opacity-60 sm:min-h-0">
+    <button type="submit" disabled={pending} className="min-h-11 cursor-pointer whitespace-nowrap rounded-full border border-white/35 px-3.5 py-1.5 font-semibold sm:px-4 hover:border-white disabled:opacity-60 sm:min-h-0">
       {pending ? "Resetting" : "Reset demo"}
     </button>
   );
