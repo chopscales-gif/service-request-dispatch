@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { fmtBetween, fmtTime, fmtWindow } from "@/lib/clock";
 import { COMPANY, JOB_TYPES, TECH_BY_ID } from "@/lib/crew";
+import { Avatar } from "@/components/ui";
 import { areaOf } from "@/lib/town";
 import { jobDetail } from "@/server/queries";
 import { getCtx } from "@/server/session";
@@ -57,22 +59,32 @@ export default async function TrackPage({ params }: PageProps<"/track/[id]">) {
     detailLine = `Right now we expect ${tech.first} about ${fmtTime(slot!.arrive).replace(" ", "\u00a0")}.`;
   }
 
+  const danger = job.status === "referred" || job.status === "hold";
   return (
     <main className="flex-1">
-      <div className={`${job.status === "referred" || job.status === "hold" ? "bg-flag text-white" : "bg-hivis"} pb-8 pt-6 lg:pb-10 lg:pt-10`}>
+      <div className={`relative isolate overflow-hidden pb-10 pt-8 lg:pb-14 lg:pt-14 ${danger ? "bg-flag text-white" : ""}`}>
+        {!danger && (
+          <>
+            <Image src="/photos/vanity.jpg" alt="" fill preload sizes="100vw" className="-z-20 object-cover object-[50%_45%]" />
+            <div aria-hidden className="hero-wash absolute inset-0 -z-10" />
+          </>
+        )}
         <div className="mx-auto max-w-[72rem] px-4 sm:px-6">
-          <p className="font-semibold">
+          <p className={`tag text-[0.9375rem] ${danger ? "bg-white/15 text-white" : "bg-surface text-accent-deep shadow-rest"}`}>
             {job.customer}, {job.street}, {areaOf(job).name}
           </p>
-          <h1 className="mt-2 max-w-5xl text-balance text-4xl leading-none sm:text-5xl lg:text-[3.5rem]">{headline.replace(/(\d) (AM|PM)/g, "$1\u00a0$2")}</h1>
-          <p className="mt-3 max-w-2xl text-lg leading-snug lg:text-xl">{detailLine}</p>
+          <h1 className="mt-4 max-w-4xl text-balance text-4xl leading-[1.04] sm:text-5xl lg:text-[3.75rem]">{headline.replace(/(\d) (AM|PM)/g, "$1\u00a0$2")}</h1>
+          <p className={`mt-4 max-w-2xl text-lg leading-snug lg:text-xl ${danger ? "" : "text-[#3b4270]"}`}>{detailLine}</p>
 
           {reached >= 0 && (
-            <ol className="mt-7 grid max-w-3xl grid-cols-4 gap-1.5" aria-label="Progress">
+            <ol className="sheet mt-8 grid max-w-3xl grid-cols-4 gap-2 px-4 py-4 sm:gap-3 sm:px-6 sm:py-5" aria-label="Progress">
               {STEPS.map((step, index) => (
-                <li key={step.status} aria-current={index === reached ? "step" : undefined} className="text-sm font-semibold leading-tight sm:text-base">
-                  <span className={`mb-1.5 block h-3 border-2 border-ink ${index <= reached ? "bg-ink" : "bg-transparent"}`} />
-                  <span className={index === reached ? "font-extrabold" : index < reached ? "" : "text-ink/75"}>{step.label}</span>
+                <li key={step.status} aria-current={index === reached ? "step" : undefined} className="text-sm font-medium leading-tight sm:text-base">
+                  <span className={`mb-2.5 block h-2 rounded-full ${index <= reached ? "bg-accent" : "bg-idle"}`} />
+                  <span className={`flex items-center gap-1.5 ${index === reached ? "font-semibold text-accent-deep" : index < reached ? "text-ink" : "text-muted"}`}>
+                    {index === reached && <span aria-hidden className="size-2 flex-none rounded-full bg-sun ring-2 ring-[#ffe6ad]" />}
+                    {step.label}
+                  </span>
                 </li>
               ))}
             </ol>
@@ -80,39 +92,37 @@ export default async function TrackPage({ params }: PageProps<"/track/[id]">) {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-[72rem] items-start gap-x-12 gap-y-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+      <div className="mx-auto grid max-w-[72rem] items-start gap-x-12 gap-y-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         <div className="space-y-4">
           {late && (
-            <p role="status" className="rounded-[3px] border-2 border-ink bg-hivis-tint p-4 leading-snug">
+            <p role="status" className="rounded-2xl border border-[#f1cf7e] bg-sun-tint p-4 leading-snug">
               {job.urgency === "emergency" ? "We are running behind and we are sorry. Keep the main water valve off if you can." : `We are running behind. That is later than the ${fmtWindow(job.windowStart, job.windowEnd)} we gave you, and we are sorry.`}
             </p>
           )}
           {tech && reached >= 0 && (
-            <section data-tone={tech.tone} className="flex items-center gap-4 rounded-[3px] border-2 border-ink bg-surface p-4">
-              <span aria-hidden className="grid h-14 w-14 flex-none place-items-center rounded-[3px] bg-(--tone) font-display text-2xl font-extrabold text-white">
-                {tech.first[0]}
-              </span>
+            <section data-tone={tech.tone} className="sheet flex items-center gap-4 p-5">
+              <Avatar initial={tech.first[0]} className="size-16 text-[1.75rem]" />
               <p className="leading-snug">
-                <span className="block text-sm text-muted">Your technician</span>
-                <span className="block font-display text-xl font-bold">{tech.name}</span>
+                <span className="block text-sm font-medium text-muted">Your technician</span>
+                <span className="block font-display text-2xl font-semibold">{tech.name}</span>
                 <span className="text-muted">{job.type && JOB_TYPES[job.type].label}</span>
               </p>
             </section>
           )}
           {job.status !== "cancelled" && (
-          <p className="leading-snug text-muted">
-            Questions about this visit? Call {COMPANY.name} on <span className="font-semibold text-ink">{COMPANY.phone}</span>.
-          </p>
+            <p className="leading-snug text-muted">
+              Questions about this visit? Call {COMPANY.name} on <span className="font-semibold text-ink">{COMPANY.phone}</span>.
+            </p>
           )}
         </div>
 
         <section>
-          <h2 className="text-2xl font-bold">Texts from us</h2>
-          <p className="text-sm text-muted">In the demo these are shown here and never sent.</p>
-          {detail.texts.length === 0 && <p className="mt-2 text-muted">None yet today.</p>}
-          <ul className="mt-3 space-y-2">
+          <h2 className="text-2xl font-semibold">Texts from us</h2>
+          <p className="mt-0.5 text-sm text-muted">In the demo these are shown here and never sent.</p>
+          {detail.texts.length === 0 && <p className="mt-3 text-muted">None yet today.</p>}
+          <ul className="mt-4 space-y-2.5">
             {detail.texts.map((text) => (
-              <li key={text.id} className="mr-8 max-w-lg rounded-2xl rounded-bl-sm bg-surface px-4 py-3 leading-snug shadow-[0_1px_0_rgb(20_20_20/0.15)]">
+              <li key={text.id} className="mr-8 max-w-lg rounded-[1.25rem] rounded-bl-md border border-line bg-surface px-4 py-3 leading-snug shadow-rest">
                 {text.body}
                 <span className="mt-1 block text-sm text-muted">{fmtTime(text.at)}</span>
               </li>

@@ -19,12 +19,13 @@ export function Proposal({ view }: { view: Board }) {
   const moves = proposal.changes.filter((change) => change.fromTech !== change.toTech);
   const shifts = proposal.changes.filter((change) => change.fromTech === change.toTech);
   return (
-    <section aria-labelledby="proposal-title" className="grid gap-x-10 rounded-[3px] border-2 border-ink bg-hivis p-4 sm:p-5 xl:grid-cols-2">
+    <section aria-labelledby="proposal-title" className="grid gap-x-12 rounded-[1.25rem] border border-[#f1cf7e] bg-gradient-to-br from-sun-tint to-[#fffaf0] p-5 shadow-lift sm:p-7 xl:grid-cols-2">
       <div>
-      <h2 id="proposal-title" className="text-2xl font-extrabold lg:text-3xl">
+      <p className="tag bg-sun text-ink">Needs your decision</p>
+      <h2 id="proposal-title" className="mt-3 text-balance text-2xl font-semibold leading-tight lg:text-[2rem]">
         {late.length === 1 ? "One customer" : `${late.length} customers`} will be kept waiting longer than we said
       </h2>
-      <ul className="mt-2 space-y-1 leading-snug">
+      <ul className="mt-3 space-y-1.5 leading-snug">
         {late.map((job) => {
           const slot = view.projection.slots[job.id];
           return (
@@ -36,11 +37,11 @@ export function Proposal({ view }: { view: Board }) {
       </ul>
       </div>
 
-      <div className="mt-4 xl:mt-0">
+      <div className="mt-5 rounded-2xl border border-[#f3dfa6] bg-surface p-4 shadow-rest sm:p-5 xl:mt-0">
       {proposal.changes.length > 0 ? (
         <>
-          <h3 className="text-xl font-bold">Proposed reshuffle (written rules, not AI)</h3>
-          <ul className="mt-1.5 space-y-1 leading-snug">
+          <h3 className="text-xl font-semibold">Proposed reshuffle (written rules, not AI)</h3>
+          <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-snug marker:text-sun-deep">
             {moves.map((change) => (
               <li key={change.id}>
                 Move <strong className="font-semibold">{byId.get(change.id)!.customer}</strong> from {first(change.fromTech)} to <strong className="font-semibold">{first(change.toTech)}</strong>, who has the right
@@ -65,10 +66,10 @@ export function Proposal({ view }: { view: Board }) {
           ? "After this, every customer is back inside the window they were given."
           : `Still late after this: ${proposal.stillLate.map((knock) => `${byId.get(knock.id)!.customer}, by ${fmtDuration(knock.late)}`).join("; ")}. They get a text with the new time.`}
       </p>
-      <ActionButton action={acceptReshuffleAction.bind(null, proposal.signature)} pendingLabel="Updating the board" className="mt-3">
+      <ActionButton action={acceptReshuffleAction.bind(null, proposal.signature)} pendingLabel="Updating the board" className="mt-4">
         {proposal.changes.length > 0 ? "Accept the reshuffle and queue the texts" : "Queue texts with the new times"}
       </ActionButton>
-      <p className="mt-2 text-sm">Texts go to the outbox under Texts to customers. Nothing is sent.</p>
+      <p className="mt-2.5 text-sm text-muted">Texts go to the outbox under Texts to customers. Nothing is sent.</p>
       </div>
     </section>
   );

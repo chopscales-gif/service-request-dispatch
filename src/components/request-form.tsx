@@ -46,7 +46,7 @@ export function RequestForm({ plan, now, own, max }: Props) {
   if (own >= max)
     return (
       <div role="status" className="max-w-2xl leading-snug">
-        <h2 className="text-2xl font-bold">You have used all {max} bookings in this demo</h2>
+        <h2 className="text-2xl font-semibold">You have used all {max} bookings in this demo</h2>
         <p className="mt-1.5">Each visitor can book {max} visits of their own, which keeps the sample day a sensible size. Your bookings are listed above and can still be followed.</p>
         <p className="mt-1.5">
           To book again, press <strong className="font-semibold">Reset demo</strong> in the bar at the top. That puts the day back to how it started.
@@ -55,10 +55,13 @@ export function RequestForm({ plan, now, own, max }: Props) {
     );
 
   return (
-    <form onSubmit={submit} className="grid gap-x-10 gap-y-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+    <form onSubmit={submit} className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
       <fieldset>
-        <legend className="font-display text-xl font-bold">What is wrong?</legend>
-        <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+        <legend className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
+          <span aria-hidden className="step-no">1</span>
+          What is wrong?
+        </legend>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           {PROBLEM_KEYS.map((key) => (
             <label key={key} className="choice">
               <input type="radio" name="problem" checked={problem === key} onChange={() => setProblem(key)} />
@@ -73,41 +76,45 @@ export function RequestForm({ plan, now, own, max }: Props) {
       </fieldset>
 
       {problem === "gas" ? (
-        <div role="alert" className="self-start rounded-[3px] border-2 border-flag bg-flag-tint p-5 leading-relaxed lg:p-6">
-          <h2 className="text-3xl font-extrabold text-flag">Leave the house now</h2>
+        <div role="alert" className="self-start rounded-[1.25rem] border-2 border-flag bg-flag-tint p-5 leading-relaxed lg:p-7">
+          <h2 className="text-3xl font-semibold text-flag">Leave the house now</h2>
           <p className="mt-1.5">
             Take everyone with you. Do not use light switches, phones or anything with a flame indoors. From outside, call your gas company&apos;s emergency line or <strong className="font-semibold">911</strong>.
           </p>
           <p className="mt-1.5">We cannot book a visit for a smell of gas. Once the gas company says it is safe, call us on {COMPANY.phone} and we will come.</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-8">
           <fieldset>
-            <legend className="font-display text-xl font-bold">How soon?</legend>
-            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            <legend className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
+              <span aria-hidden className="step-no">2</span>
+              How soon?
+            </legend>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
               <label className="choice">
                 <input type="radio" name="urgency" checked={emergency === true} onChange={() => setEmergency(true)} />
                 <span>
                   It is an emergency
-                  <span className="block text-sm text-muted">Water is coming in and I cannot stop it.</span>
+                  <span className="mt-0.5 block text-sm font-normal text-muted">Water is coming in and I cannot stop it.</span>
                 </span>
               </label>
               <label className="choice">
                 <input type="radio" name="urgency" checked={emergency === false} onChange={() => setEmergency(false)} />
                 <span>
                   Today, at a time I choose
-                  <span className="block text-sm text-muted">It can wait a few hours.</span>
+                  <span className="mt-0.5 block text-sm font-normal text-muted">It can wait a few hours.</span>
                 </span>
               </label>
             </div>
           </fieldset>
 
-          <div className="grid gap-x-4 gap-y-6 sm:grid-cols-2">
+          <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2">
           <div>
-            <label htmlFor="area" className="block font-display text-xl font-bold">
+            <label htmlFor="area" className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
+              <span aria-hidden className="step-no">3</span>
               Which part of {COMPANY.town}?
             </label>
-            <select id="area" className="field mt-2" value={area} onChange={(event) => setArea(event.target.value as AreaKey | "")}>
+            <select id="area" className="field mt-3" value={area} onChange={(event) => setArea(event.target.value as AreaKey | "")}>
               <option value="">Choose an area</option>
               {AREAS.map((item) => (
                 <option key={item.key} value={item.key}>
@@ -115,26 +122,30 @@ export function RequestForm({ plan, now, own, max }: Props) {
                 </option>
               ))}
             </select>
-            <p className="mt-1 text-sm text-muted">The demo gives you an invented address there. Do not enter a real one.</p>
+            <p className="mt-2 text-sm leading-snug text-muted">The demo gives you an invented address there. Do not enter a real one.</p>
           </div>
 
           <div>
-            <label htmlFor="name" className="block font-display text-xl font-bold">
+            <label htmlFor="name" className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
+              <span aria-hidden className="step-no">4</span>
               A name for the booking
             </label>
-            <input id="name" className="field mt-2" maxLength={40} autoComplete="off" value={name} onChange={(event) => setName(event.target.value)} placeholder="Any made-up name" />
+            <input id="name" className="field mt-3" maxLength={40} autoComplete="off" value={name} onChange={(event) => setName(event.target.value)} placeholder="Any made-up name" />
           </div>
           </div>
 
-          {ready && emergency && <p className="rounded-[3px] border-l-8 border-ink bg-hivis-tint p-4 leading-snug">We will send the technician who can reach you soonest, ahead of other work. You will see who and when on the next page.</p>}
+          {ready && emergency && <p className="rounded-2xl border border-[#f1cf7e] bg-sun-tint p-4 leading-snug">We will send the technician who can reach you soonest, ahead of other work. You will see who and when on the next page.</p>}
 
           {ready && !emergency && (
             <fieldset>
-              <legend className="font-display text-xl font-bold">When should we arrive?</legend>
+              <legend className="flex items-center gap-2.5 font-display text-[1.375rem] font-semibold">
+                <span aria-hidden className="step-no">5</span>
+                When should we arrive?
+              </legend>
               {offers.length > 0 ? (
                 <>
-                  <p className="mt-1 text-sm leading-snug text-muted">These are the two-hour windows a technician with the right skills can keep without making another customer late.</p>
-                  <div className="mt-2 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+                  <p className="mt-2 text-sm leading-snug text-muted">These are the two-hour windows a technician with the right skills can keep without making another customer late.</p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
                     {offers.map((offer) => (
                       <label key={offer.start} className="choice">
                         <input type="radio" name="window" checked={chosen === offer.start} onChange={() => setWindowStart(offer.start)} />
@@ -150,7 +161,7 @@ export function RequestForm({ plan, now, own, max }: Props) {
           )}
 
           <div>
-            <button type="submit" disabled={!canSend || pending} className="btn btn-primary w-full px-8 py-3 text-lg sm:w-auto">
+            <button type="submit" disabled={!canSend || pending} className="btn btn-primary w-full px-9 py-3.5 text-lg sm:w-auto">
               {pending ? "Booking" : emergency ? "Send someone now" : ready && offers.length === 0 ? "Ask for tomorrow morning" : "Book this visit"}
             </button>
             {!canSend && !pending && <p className="mt-2 text-sm text-muted">Answer every question above to book.</p>}

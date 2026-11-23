@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { RequestForm } from "@/components/request-form";
 import { COMPANY } from "@/lib/crew";
@@ -19,47 +20,83 @@ export default async function CustomerPage() {
   const mine = view.jobs.filter((job) => job.source === "web");
   return (
     <main className="flex-1">
-      {/* The side of the van: the company's yellow carries on down from the header. */}
-      <div className="bg-hivis pb-20 lg:pb-24">
-        <div className="mx-auto grid max-w-[88rem] gap-x-12 gap-y-4 px-4 pt-6 sm:px-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:pt-8">
-          <h1 className="text-[2.75rem] leading-[0.95] sm:text-6xl lg:text-[3.25rem] xl:text-6xl">Request a plumber</h1>
-          <div className="max-w-xl text-lg leading-snug">
-            <p>
-              {COMPANY.name} serves {COMPANY.town}. Tell us what is wrong and choose a time. You will get a page to follow your visit.
-            </p>
-            <p className="mt-2 text-base">
-              <span className="font-semibold">Where we work:</span> {AREAS.map((area) => area.name).join(", ")}.
-            </p>
+      {/* First screen: the company speaking, over a photograph of the kind of room it works in. */}
+      <div className="relative isolate overflow-hidden pb-28 lg:pb-32">
+        <Image src="/photos/kitchen.jpg" alt="" fill preload sizes="100vw" className="-z-20 object-cover object-[60%_55%]" />
+        <div aria-hidden className="hero-wash absolute inset-0 -z-10" />
+        <div className="mx-auto max-w-[88rem] px-4 pt-10 sm:px-6 lg:pt-16">
+          <p className="tag bg-surface text-[0.9375rem] text-accent-deep shadow-rest">Plumbing and drains in {COMPANY.town}</p>
+          <h1 className="mt-4 max-w-2xl text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]">Request a plumber</h1>
+          <p className="mt-4 max-w-xl text-lg leading-snug text-[#3b4270] lg:text-xl">
+            {COMPANY.name} serves {COMPANY.town}. Tell us what is wrong and choose a time. You will get a page to follow your visit.
+          </p>
+          <div className="mt-6 max-w-2xl">
+            <p className="font-semibold">Where we work:</p>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {AREAS.map((area) => (
+                <li key={area.key} className="rounded-full border border-[#cfd6f3] bg-surface/90 px-3.5 py-1.5 text-[0.9375rem] font-medium shadow-rest">
+                  {area.name}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
 
-      <div className="mx-auto -mt-14 w-full max-w-[88rem] px-4 pb-10 sm:px-6 lg:-mt-16">
+      <div className="relative mx-auto -mt-20 w-full max-w-[88rem] px-4 pb-12 sm:px-6 lg:-mt-24">
         {mine.length > 0 && (
-          <p className="mb-3 rounded-[3px] bg-ink px-4 py-3 leading-snug text-white on-dark">
+          <p className="mb-3 rounded-2xl bg-ink px-5 py-3.5 leading-snug text-white shadow-lift">
             Your bookings:{" "}
             {mine.map((job, index) => (
               <span key={job.id}>
                 {index > 0 && ", "}
-                <Link href={`/track/${job.id}`} className="font-semibold text-hivis underline underline-offset-4">
+                <Link href={`/track/${job.id}`} className="font-semibold text-sun underline underline-offset-4">
                   {job.customer}
                 </Link>
               </span>
             ))}
           </p>
         )}
-        <div className="rounded-[3px] border-2 border-ink bg-surface p-4 shadow-[0_6px_0_rgb(20_20_20/0.18)] sm:p-6 lg:p-8">
+        <div className="sheet p-5 sm:p-7 lg:p-9">
           <RequestForm plan={view.plan.map(slim)} now={view.now} own={mine.length} max={MAX_OWN_REQUESTS} />
         </div>
-        {sample && (
-          <p className="mt-6 max-w-3xl leading-relaxed text-muted">
-            Or follow a customer who is already booked:{" "}
-            <Link href={`/track/${sample.id}`} className="font-semibold text-ink underline underline-offset-4">
-              {sample.customer}&apos;s visit
-            </Link>
-            . The page changes as the day moves on, so look again after you skip ahead.
-          </p>
-        )}
+
+        <section aria-labelledby="after-title" className="mt-12 grid items-center gap-x-12 gap-y-8 lg:mt-16 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
+          <div className="grid grid-cols-[3fr_2fr] gap-3 sm:gap-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] shadow-lift">
+              <Image src="/photos/basin.jpg" alt="A bathroom with a round basin under a window" fill sizes="(min-width: 64rem) 28vw, 58vw" className="object-cover" />
+            </div>
+            <div className="relative overflow-hidden rounded-[1.25rem] shadow-lift">
+              <Image src="/photos/tap.jpg" alt="A brushed steel tap on a white counter" fill sizes="(min-width: 64rem) 19vw, 38vw" className="object-cover object-[50%_80%]" />
+            </div>
+          </div>
+          <div>
+            <h2 id="after-title" className="text-3xl font-semibold leading-tight lg:text-[2.25rem]">What happens after you book</h2>
+            <ol className="mt-5 space-y-4 text-lg leading-snug">
+              <li className="flex gap-3.5">
+                <span aria-hidden className="step-no mt-0.5">1</span>
+                <span>You get your own page, with the technician&apos;s name and when to expect them.</span>
+              </li>
+              <li className="flex gap-3.5">
+                <span aria-hidden className="step-no mt-0.5">2</span>
+                <span>We text you when they set off, and again if the time changes.</span>
+              </li>
+              <li className="flex gap-3.5">
+                <span aria-hidden className="step-no mt-0.5">3</span>
+                <span>The page keeps up with the day, so you never have to ring to ask.</span>
+              </li>
+            </ol>
+            {sample && (
+              <p className="mt-6 max-w-xl leading-relaxed text-muted">
+                Or follow a customer who is already booked:{" "}
+                <Link href={`/track/${sample.id}`} className="link">
+                  {sample.customer}&apos;s visit
+                </Link>
+                . The page changes as the day moves on, so look again after you skip ahead.
+              </p>
+            )}
+          </div>
+        </section>
       </div>
     </main>
   );

@@ -6,8 +6,8 @@ export const metadata: Metadata = { title: "Cookies are needed" };
 /** Shown by the proxy when the sandbox cookie was offered and did not come back. */
 export default function CookiesNeeded() {
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-16">
-      <h1 className="text-balance text-3xl font-bold">This demo needs cookies switched on</h1>
+    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-20">
+      <h1 className="text-balance text-4xl">This demo needs cookies switched on</h1>
       <p className="mt-3 leading-relaxed text-muted">
         Every visitor gets a private copy of the sample day, so that what you do here is yours alone. One cookie remembers which copy is yours.
         It holds a random id and nothing about you, and it expires after two days.

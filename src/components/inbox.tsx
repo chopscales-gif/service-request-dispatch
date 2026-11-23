@@ -35,8 +35,8 @@ export function MessageText({ message, reading }: { message: Message; reading: R
   parts.push(message.text.slice(at));
   return (
     <figure>
-      <figcaption className="text-sm text-muted">{message.channel}, as it arrived</figcaption>
-      <blockquote className="mt-1 whitespace-pre-line border-l-4 border-ink pl-3 text-[1.0625rem] leading-relaxed">{parts}</blockquote>
+      <figcaption className="text-sm font-medium text-muted">{message.channel}, as it arrived</figcaption>
+      <blockquote className="mt-2 whitespace-pre-line rounded-2xl rounded-tl-md bg-[#f1f3fb] px-4 py-3.5 text-[1.0625rem] leading-relaxed">{parts}</blockquote>
     </figure>
   );
 }
@@ -47,10 +47,10 @@ const READ_URGENCY: Record<Reading["urgency"]["value"], string> = { emergency: "
 /** What the recorded AI reading made of the message. It describes; it does not decide. */
 export function ReadingPanel({ reading }: { reading: Reading }) {
   return (
-    <div className="rounded-[3px] bg-[#f0f1f3] p-3">
-      <p className="text-sm font-semibold text-muted">Read by AI (recorded). Marked words are what it quoted.</p>
-      <p className="mt-1.5 leading-snug">{reading.summary}</p>
-      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[0.9375rem] leading-snug">
+    <div className="rounded-2xl border border-[#d5dbf8] bg-gradient-to-b from-accent-tint to-[#f4f5fe] p-4">
+      <p className="text-sm font-semibold text-accent-deep">Read by AI (recorded). Marked words are what it quoted.</p>
+      <p className="mt-2 leading-snug">{reading.summary}</p>
+      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 border-t border-[#d5dbf8] pt-3 text-[0.9375rem] leading-snug">
         <dt className="text-muted">Job</dt>
         <dd className="font-semibold">{READ_TYPE[reading.job_type.value]}</dd>
         <dt className="text-muted">How soon</dt>
@@ -72,7 +72,7 @@ export function ReadingPanel({ reading }: { reading: Reading }) {
       </dl>
       {reading.ask_first.length > 0 && (
         <>
-          <p className="mt-3 text-sm font-semibold text-muted">Worth asking when you call back</p>
+          <p className="mt-4 text-sm font-semibold text-accent-deep">Worth asking when you call back</p>
           <ul className="mt-1 list-disc space-y-1 pl-5 text-[0.9375rem] leading-snug">
             {reading.ask_first.map((question) => (
               <li key={question}>{question}</li>
@@ -82,7 +82,7 @@ export function ReadingPanel({ reading }: { reading: Reading }) {
       )}
       {reading.notes.length > 0 && (
         <>
-          <p className="mt-3 text-sm font-semibold text-muted">Its notes</p>
+          <p className="mt-4 text-sm font-semibold text-accent-deep">Its notes</p>
           <ul className="mt-1 list-disc space-y-1 pl-5 text-[0.9375rem] leading-snug">
             {reading.notes.map((note) => (
               <li key={note}>{note}</li>
@@ -101,12 +101,16 @@ export function Options({ job, options, now }: { job: Job; options: Option[]; no
   const unable = options.filter((option) => !option.ok);
   return (
     <div>
-      <ul className="divide-y divide-line border-y border-line">
+      <ul className="space-y-2">
         {able.map((option, index) => {
           if (!option.ok) return null;
           const tech = TECH_BY_ID[option.techId];
           return (
-            <li key={option.techId} className="flex flex-wrap items-start gap-x-3 gap-y-2 py-2.5 sm:flex-nowrap">
+            <li
+              key={option.techId}
+              data-tone={tech.tone}
+              className={`flex flex-wrap items-center gap-x-3 gap-y-2.5 rounded-2xl border px-3.5 py-3 sm:flex-nowrap ${index === 0 && !moving ? "border-accent bg-accent-tint/60 shadow-[inset_0_0_0_1px_var(--color-accent)]" : "border-line bg-surface"}`}
+            >
               <div className="min-w-0 flex-1 basis-56 sm:basis-0">
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <TechName id={option.techId} full />
@@ -123,7 +127,7 @@ export function Options({ job, options, now }: { job: Job; options: Option[]; no
         })}
       </ul>
       {unable.length > 0 && (
-        <p className="mt-2 text-sm leading-snug text-muted">
+        <p className="mt-3 text-sm leading-snug text-muted">
           Ruled out: {unable.map((option) => `${TECH_BY_ID[option.techId].first} (${option.ok ? "" : option.reason.toLowerCase()})`).join(", ")}.
         </p>
       )}
@@ -138,10 +142,10 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
   const hold = job.status === "hold";
   const emergency = job.urgency === "emergency" && !hold;
   return (
-    <article id={`job-${job.id}`} className={`panel overflow-hidden border-l-8 ${hold || emergency ? "border-flag" : job.urgency === "today" ? "border-l-hivis" : "border-l-muted"}`}>
-      <header className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b px-4 py-2.5 ${hold || emergency ? "border-flag bg-flag-tint" : "border-line"}`}>
-        <h3 className="text-xl font-bold">
-          <Link href={`/jobs/${job.id}`} className="underline decoration-line underline-offset-4 hover:decoration-ink">
+    <article id={`job-${job.id}`} className={`sheet overflow-hidden ${hold || emergency ? "border-[#f0b8c3]" : ""}`}>
+      <header className={`flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b px-5 py-3.5 ${hold || emergency ? "border-[#f5ccd4] bg-gradient-to-r from-flag-tint to-[#fff6f4]" : "border-line bg-[#f8f9fe]"}`}>
+        <h3 className="text-[1.375rem] font-semibold">
+          <Link href={`/jobs/${job.id}`} className="underline decoration-[#c5cdea] underline-offset-4 hover:decoration-ink">
             {job.customer}
           </Link>
         </h3>
@@ -150,7 +154,7 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
           {job.street}, {areaOf(job).name}. Received {fmtTime(job.receivedAt)}.
         </p>
       </header>
-      <div className="grid gap-x-6 gap-y-4 p-4 xl:grid-cols-2">
+      <div className="grid gap-x-8 gap-y-5 p-5 xl:grid-cols-2">
         <div className="space-y-3">
           {message && <MessageText message={message} reading={reading} />}
           {reading && <ReadingPanel reading={reading} />}
@@ -158,7 +162,7 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
         <div>
           {hold ? (
             <>
-              <h4 className="font-display text-lg font-bold text-flag">Held by a written rule: the message mentions a smell of gas</h4>
+              <h4 className="font-display text-xl font-semibold text-flag">Held by a written rule: the message mentions a smell of gas</h4>
               <p className="mt-1.5 leading-snug">{GAS_RULE}</p>
               <p className="mt-1.5 text-sm leading-snug text-muted">This request cannot be booked from here, whatever the AI reading says about it.</p>
               <ActionButton action={referGasAction.bind(null, job.id)} pendingLabel="Queuing" variant="danger" className="mt-3">
@@ -167,7 +171,7 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
             </>
           ) : !job.type ? (
             <>
-              <h4 className="font-display text-lg font-bold">What kind of job is this?</h4>
+              <h4 className="font-display text-xl font-semibold">What kind of job is this?</h4>
               <p className="mt-1.5 leading-snug text-muted">The reading could not tell from the message, so nobody is suggested yet. Call the customer, then choose.</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {JOB_TYPE_KEYS.filter((key) => key !== "water_heater_replace").map((key) => (
@@ -179,12 +183,12 @@ export function InboxCard({ item, now }: { item: InboxItem; now: number }) {
             </>
           ) : (
             <>
-              <h4 className="font-display text-lg font-bold">Who to send (written rules, not AI)</h4>
+              <h4 className="font-display text-xl font-semibold">Who to send (written rules, not AI)</h4>
               <p className="mt-1 text-sm leading-snug text-muted">
                 The job: {JOB_TYPES[job.type].label.toLowerCase()}, about {fmtDuration(job.est)} on site.
               </p>
-              {emergency && <p className="mt-2 rounded bg-flag-tint px-3 py-2 text-[0.9375rem] leading-snug">{EMERGENCY_RULE}</p>}
-              <div className="mt-2">
+              {emergency && <p className="mt-2.5 rounded-xl bg-flag-tint px-3.5 py-2.5 text-[0.9375rem] leading-snug">{EMERGENCY_RULE}</p>}
+              <div className="mt-3">
                 <Options job={job} options={options} now={now} />
               </div>
               {!emergency && (

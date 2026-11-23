@@ -8,9 +8,8 @@ import { viewOf } from "./demo-bar";
 const WHOSE = { dispatcher: "The dispatcher's screen", customer: "What a customer sees", technician: "A technician's phone" };
 
 /**
- * The fictional company's own header. Customers get the side of the van:
- * yellow, with the name and the number to call. The office and the crew get
- * the same name on black, with their tabs.
+ * The fictional company's own header: a white bar with the name, whose screen
+ * this is, and that person's tabs. Customers get the number to call.
  */
 export function SiteHeader() {
   const pathname = usePathname();
@@ -20,22 +19,29 @@ export function SiteHeader() {
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`inline-flex min-h-11 items-center border-b-4 px-1 font-semibold ${customer ? (active ? "border-ink" : "border-transparent hover:border-ink/40") : active ? "border-hivis text-white" : "border-transparent text-white/75 hover:text-white"}`}
+      className={`inline-flex min-h-11 items-center rounded-full px-4 font-semibold sm:min-h-10 ${active ? "bg-accent-tint text-accent-deep" : "text-muted hover:bg-idle hover:text-ink"}`}
     >
       {label}
     </Link>
   );
   const [first, ...rest] = COMPANY.name.split(" ");
   return (
-    <header className={customer ? "bg-hivis text-ink" : "on-dark bg-ink text-white"}>
+    <header className="relative z-10 border-b border-line bg-surface">
       <div className="mx-auto flex max-w-[88rem] flex-wrap items-center justify-between gap-x-8 px-4 sm:px-6">
-        <p className="flex flex-wrap items-baseline gap-x-3 py-2.5 leading-tight">
-          <span className="font-stretch-[125%] text-[1.375rem] font-extrabold tracking-tight">
-            <span className={customer ? "" : "text-hivis"}>{first}</span> <span className="font-stretch-[100%] font-semibold">{rest.join(" ")}</span>
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-0.5 py-3 leading-tight">
+          <span className="flex items-center gap-2.5">
+            <svg aria-hidden viewBox="0 0 28 28" className="size-7 flex-none">
+              <rect width="28" height="28" rx="9" fill="#3d4fd6" />
+              <path d="M14 5.5c3.4 4.1 5.6 7.1 5.6 10.1a5.6 5.6 0 0 1-11.2 0c0-3 2.2-6 5.6-10.1Z" fill="#ffffff" />
+              <circle cx="16.3" cy="16.4" r="1.7" fill="#ffc44d" />
+            </svg>
+            <span className="font-display text-[1.3125rem] font-semibold tracking-[-0.02em]">
+              {first} <span className="font-normal text-muted">{rest.join(" ")}</span>
+            </span>
           </span>
-          <span className={`text-sm ${customer ? "text-ink/80" : "text-white/75"}`}>{WHOSE[view]}</span>
+          <span className="rounded-full bg-idle px-2.5 py-0.5 text-sm font-medium text-muted">{WHOSE[view]}</span>
         </p>
-        <nav aria-label="Main" className="flex items-center gap-5">
+        <nav aria-label="Main" className="flex items-center gap-1.5 pb-2 sm:pb-0">
           {view === "dispatcher" && (
             <>
               {tab("/", "Board", pathname === "/" || pathname.startsWith("/jobs"))}
@@ -43,10 +49,28 @@ export function SiteHeader() {
             </>
           )}
           {customer && tab("/customer", "Request service", pathname === "/customer")}
-          {customer && <span className="hidden font-stretch-[112%] text-lg font-extrabold tabular-nums sm:inline">{COMPANY.phone}</span>}
+          {customer && <span className="ml-2 hidden rounded-full bg-ink px-4 py-2 font-display text-[1.0625rem] font-semibold tabular-nums text-white sm:inline">{COMPANY.phone}</span>}
           {view === "technician" && tab("/tech", "Crew", pathname === "/tech")}
         </nav>
       </div>
     </header>
+  );
+}
+
+/** The company's footer. On the customer's pages it also says where the photographs come from. */
+export function SiteFooter() {
+  const customer = viewOf(usePathname()) === "customer";
+  return (
+    <footer className="border-t border-line bg-surface">
+      <div className="mx-auto flex max-w-[88rem] flex-wrap gap-x-10 gap-y-2 px-4 py-6 text-sm leading-relaxed text-muted sm:px-6">
+        <p className="max-w-xl">
+          <span className="font-semibold text-ink">{COMPANY.name}</span> is a fictional company in an invented town, made for this demonstration build by ChopMedia. No text is ever sent.{" "}
+          <Link href="/about" className="link">
+            How this demo works
+          </Link>
+        </p>
+        {customer && <p className="max-w-xl">Photographs are stock images under the Unsplash licence. They show no real job, and any people in them are not this company&apos;s staff or customers.</p>}
+      </div>
+    </footer>
   );
 }
