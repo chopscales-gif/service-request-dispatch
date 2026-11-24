@@ -19,7 +19,7 @@ export default function About() {
       <h2 className={h2}>What it shows</h2>
       <p className={p}>
         A service company&apos;s day never goes to plan. Requests arrive as rambling messages, one job runs long, an emergency lands in the middle, and the dispatcher has to decide who goes
-        where while customers wait to hear. This demo follows one such day from three sides: the customer who asks for a visit, the dispatcher who runs the board, and the technician with a
+        where while customers wait to hear. This demo follows one such day from three sides: the customer who asks for a visit, the dispatcher who runs the day, and the technician with a
         phone. All three look at the same day, so what one does shows up for the others.
       </p>
 
@@ -48,7 +48,7 @@ export default function About() {
 
       <h2 className={h2}>Scripted: the day itself</h2>
       <p className={p}>
-        The demo has its own clock, starting at 9:30 AM. <em>Skip ahead 30 minutes</em> moves it on, and the crew carries on with the plan. Which messages arrive when, and which job runs long,
+        The demo has its own clock, starting at 9:30 AM. <em>Skip ahead 30 min</em> moves it on, and the crew carries on with the plan. Which messages arrive when, and which job runs long,
         is fixed in advance. The map is a drawing of the invented town, and drive times are counted in blocks on that drawing. A real build takes them from a mapping service.
       </p>
 

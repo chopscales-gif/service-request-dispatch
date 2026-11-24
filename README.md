@@ -29,15 +29,15 @@ Then the day stops following the plan. A one-hour repair turns into three. A cei
 
 Three things worth clicking first:
 
-1. On the board, read **Renee Kowalczyk's message** under Waiting for you. See what the AI pulled out of it, then who the rules would send and why. Send someone and watch the job land on the board.
-2. Press **Skip ahead 30 minutes** twice. At 10:30 a water heater job runs long and a ceiling leak comes in. Accept the reshuffle, send someone to the emergency, then open **Texts to customers**.
+1. On **Today**, open **Renee Kowalczyk**. See her message, what the AI pulled out of it, then who the rules would send and why. Send someone, then open **Schedule** to see the job on the board.
+2. Press **Skip ahead 30 min** twice. At 10:30 a water heater job runs long and a ceiling leak comes in. Open **A job is running long** at the top of Today, accept the reshuffle, send someone to the emergency, then open **Texts**.
 3. Switch to **Customer** in the bar at the top and book a visit. You are only offered windows that can be kept. Then switch to **Technician** and work through someone's day.
 
-**Reset demo** in the top bar puts the day back to 9:30 AM.
+**Tour** in the top bar walks through the first two by itself, and **Reset demo** puts the day back to 9:30 AM.
 
-![The dispatcher's board at 10:30: a job has run long, two customers will be kept waiting, and a reshuffle is proposed](docs/board.png)
+![The dispatcher's Today screen at 10:30: one sentence says two customers will be kept waiting and five requests need a decision, above one short list](docs/board.png)
 
-![A waiting request: the customer's message with the quoted words marked, the recorded AI reading, and who the rules would send](docs/inbox.png)
+![An opened request: the customer's message with the quoted words marked, the recorded AI reading, and who the rules would send](docs/inbox.png)
 
 ![Texts to customers: an outbox of every text the day produced, none of them sent](docs/texts.png)
 
@@ -75,15 +75,18 @@ Next.js 16 (App Router, React 19, TypeScript), Tailwind CSS 4, Drizzle ORM on Po
 ```
 content/                    the instructions the AI was given
 src/
-  app/                      pages: the board, a job, texts to customers,
+  app/                      pages: today, a job, the reshuffle, the
+                            schedule, texts to customers,
                             the customer's form and visit page,
                             the technician's phone, how the demo works
   components/
     board.tsx               technicians down the side, hours across
-    inbox.tsx               a waiting request: message, reading, who to send
+    inbox.tsx               a request: message, reading, who to send
     proposal.tsx            who will be late and the proposed reshuffle
     town-map.tsx            the drawing of the town
-    request-form.tsx        the customer's form and the windows it offers
+    request-form.tsx        the customer's form, one question at a time,
+                            and the windows it offers
+    tour.tsx                the guided tour
   data/
     messages.json           the sample customer messages
     readings/               what the AI read from each one, saved

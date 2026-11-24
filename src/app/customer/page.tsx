@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { RequestForm } from "@/components/request-form";
 import { COMPANY } from "@/lib/crew";
-import { AREAS } from "@/lib/town";
 import type { PlanJob } from "@/lib/plan";
 import { board } from "@/server/queries";
 import { getCtx } from "@/server/session";
@@ -27,19 +26,7 @@ export default async function CustomerPage() {
         <div className="mx-auto max-w-[88rem] px-4 pt-10 sm:px-6 lg:pt-16">
           <p className="tag bg-surface text-[0.9375rem] text-accent-deep shadow-rest">Plumbing and drains in {COMPANY.town}</p>
           <h1 className="mt-4 max-w-2xl text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-[4.25rem]">Request a plumber</h1>
-          <p className="mt-4 max-w-xl text-lg leading-snug text-[#3b4270] lg:text-xl">
-            {COMPANY.name} serves {COMPANY.town}. Tell us what is wrong and choose a time. You will get a page to follow your visit.
-          </p>
-          <div className="mt-6 max-w-2xl">
-            <p className="font-semibold">Where we work:</p>
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {AREAS.map((area) => (
-                <li key={area.key} className="rounded-full border border-[#cdd5e4] bg-surface/90 px-3.5 py-1.5 text-[0.9375rem] font-medium shadow-rest">
-                  {area.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <p className="mt-4 max-w-xl text-xl leading-snug text-[#3b4270]">Four quick questions, then a page to follow your visit.</p>
         </div>
       </div>
 
@@ -87,12 +74,12 @@ export default async function CustomerPage() {
               </li>
             </ol>
             {sample && (
-              <p className="mt-6 max-w-xl leading-relaxed text-muted">
+              <p className="mt-6 max-w-xl text-lg leading-snug text-muted">
                 Or follow a customer who is already booked:{" "}
                 <Link href={`/track/${sample.id}`} className="link">
                   {sample.customer}&apos;s visit
                 </Link>
-                . The page changes as the day moves on, so look again after you skip ahead.
+                . It changes as the day moves on.
               </p>
             )}
           </div>

@@ -94,26 +94,26 @@ export function Board({ jobs, projection, now }: Props) {
             </div>
           </div>
         </div>
-        <p className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-t border-line bg-[#f6f8fb] px-5 py-3 text-sm text-muted">
+        <p className="flex flex-wrap items-center gap-x-6 gap-y-1.5 border-t border-line bg-[#f6f8fb] px-5 py-3 text-[0.9375rem] text-muted">
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-3.5 w-6 rounded-[5px] bg-accent" />
-            Solid: on site now.
+            On site
           </span>
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-3.5 w-6 rounded-[5px] border-[1.5px] border-accent bg-surface" />
-            Outlined: still to come.
+            To come
           </span>
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-3.5 w-6 rounded-[5px] border border-[#d5daea] bg-idle" />
-            Grey: done.
+            Done
           </span>
           <span className="inline-flex items-center gap-2 font-semibold text-flag">
             <span aria-hidden className="h-3.5 w-6 rounded-[5px] border-[1.5px] border-flag bg-flag-tint" />
-            Red: will arrive later than the customer was told.
+            Late
           </span>
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-[3px] w-6 bg-[repeating-linear-gradient(to_right,var(--color-accent)_0_5px,transparent_5px_9px)]" />
-            Dashes: driving.
+            Driving
           </span>
         </p>
       </div>

@@ -388,3 +388,64 @@ h1 {
     transition: none;
   }
 }
+
+/* A fold: a heading that opens what is under it. The triangle is ours, so it sits level with the words. */
+.fold > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+.fold > summary::-webkit-details-marker {
+  display: none;
+}
+.fold > summary::after {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: auto;
+  border-right: 2px solid var(--color-muted);
+  border-bottom: 2px solid var(--color-muted);
+  transform: translateY(-0.125rem) rotate(45deg);
+}
+.fold[open] > summary::after {
+  transform: translateY(0.125rem) rotate(-135deg);
+}
+
+/* The tour dims the screen around the one thing it is showing, and a round pointer does the pressing. */
+.tour-spot {
+  position: fixed;
+  z-index: 61;
+  top: 0;
+  left: 0;
+  border-radius: 1.375rem;
+  box-shadow: 0 0 0 200vmax rgb(10 13 34 / 0.62);
+  pointer-events: none;
+}
+.tour-pointer {
+  position: fixed;
+  z-index: 63;
+  top: 0;
+  left: 0;
+  width: 1.625rem;
+  height: 1.625rem;
+  margin: -0.8125rem 0 0 -0.8125rem;
+  border-radius: 50%;
+  border: 2.5px solid #ffffff;
+  background: color-mix(in srgb, var(--color-sun) 90%, transparent);
+  box-shadow: 0 2px 10px rgb(10 13 34 / 0.4);
+  pointer-events: none;
+}
+.tour-pointer.tour-tap {
+  animation: tour-tap 420ms ease-out;
+}
+@keyframes tour-tap {
+  40% {
+    scale: 0.7;
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--color-sun) 35%, transparent);
+  }
+}

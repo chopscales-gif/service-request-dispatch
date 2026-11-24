@@ -24,7 +24,7 @@ export function TechActions({ id, status }: { id: string; status: JobStatus }) {
   return (
     <div className="space-y-3">
       <div>
-        <label htmlFor={`note-${id}`} className="block text-sm font-semibold text-muted">
+        <label htmlFor={`note-${id}`} className="block font-semibold text-muted">
           Note for the office (optional)
         </label>
         <textarea id={`note-${id}`} className="field mt-1" rows={2} maxLength={300} value={note} onChange={(event) => setNote(event.target.value)} />

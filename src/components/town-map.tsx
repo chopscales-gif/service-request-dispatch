@@ -68,7 +68,7 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
           </g>
         ))}
       </svg>
-      <figcaption className="space-y-2 border-t border-line px-5 py-4 text-sm leading-snug text-muted">
+      <figcaption className="space-y-2 border-t border-line px-5 py-4 text-[0.9375rem] leading-snug text-muted">
         <p className="flex flex-wrap gap-x-4 gap-y-1 font-medium">
           {TECHS.map((tech) => (
             <span key={tech.id} data-tone={tech.tone} className="inline-flex items-center gap-1.5 text-ink">
@@ -77,10 +77,7 @@ export function TownMap({ jobs, plan, projection, now }: Props) {
             </span>
           ))}
         </p>
-        <p>Squares are vans, rings are stops still to come, diamonds are requests waiting for you. A red diamond with an exclamation mark is an emergency or a safety hold.</p>
-        <p>
-          {TOWN} is invented and this is a drawing, not a map service. Drive times are counted in blocks on this grid.
-        </p>
+        <p>Squares are vans, rings are stops to come, diamonds are requests waiting for you. {TOWN} is invented: this is a drawing, not a map service.</p>
       </figcaption>
     </figure>
   );

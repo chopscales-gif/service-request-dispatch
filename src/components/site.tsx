@@ -44,8 +44,9 @@ export function SiteHeader() {
         <nav aria-label="Main" className="flex items-center gap-1.5 pb-2 sm:pb-0">
           {view === "dispatcher" && (
             <>
-              {tab("/", "Board", pathname === "/" || pathname.startsWith("/jobs"))}
-              {tab("/messages", "Texts to customers", pathname.startsWith("/messages"))}
+              {tab("/", "Today", pathname === "/" || pathname.startsWith("/jobs") || pathname === "/reshuffle")}
+              {tab("/schedule", "Schedule", pathname === "/schedule")}
+              {tab("/messages", "Texts", pathname.startsWith("/messages"))}
             </>
           )}
           {customer && tab("/customer", "Request service", pathname === "/customer")}
