@@ -34,7 +34,7 @@ export function DemoBar({ now }: { now: number | null }) {
   return (
     <div className="demo-chrome bg-ink text-sm text-white">
       <div className="mx-auto flex max-w-[100rem] flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-2 sm:px-6">
-        <a href="https://chopmedia.vercel.app/#service-company" className={WORD}>
+        <a href="https://haydenhuelskamp.vercel.app/#service-company" className={WORD}>
           ← All demos
         </a>
         <p className="min-w-0 flex-1 basis-60 leading-snug text-white/80 lg:flex-none lg:basis-auto">
